@@ -62,8 +62,450 @@ ES6 Intro: Difference between var, let, and const
 
 
 30-2 Function default parameter for not provided values
+===============================
+Function Default Parameter (ES6)
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Function parameter কীভাবে কাজ করে?
+- Argument না দিলে কী হয়?
+- Default parameter কীভাবে কাজ করে?
+- কেন default parameter দরকার?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Parameters vs Arguments
+- Parameters → function definition এ দেওয়া variable।
+- Arguments → function call করার সময় দেওয়া মান।
+
+Example:
+function add(num1, num2) { ... } // num1, num2 = parameters
+add(10, 20); // 10, 20 = arguments
+
+2. Without Default Parameter
+- যদি কোনো parameter এর জন্য argument না দেওয়া হয় → undefined হয়।
+- undefined দিয়ে calculation করলে → NaN হয়।
+
+Example:
+function add(num1, num2) {
+  console.log(num1 + num2);
+}
+add(10); // NaN (কারণ num2 undefined)
+
+3. Default Parameter (ES6 Feature)
+- Function definition এ parameter এর default মান দেওয়া যায়।
+- Argument না দিলে default মান ব্যবহার হবে।
+- Argument দিলে সেটাই ব্যবহার হবে।
+
+Example:
+function add(num1=0, num2=0) {
+  console.log(num1 + num2);
+}
+add(10, 20); // 30
+add(10);     // 10 (num2 default 0)
+add();       // 0 (দুটোই default)
+
+4. Another Example (Multiplication)
+function add(num1=1, num2=1) {
+  console.log(num1 * num2);
+}
+add(10, 20); // 200
+add(10);     // 10 (num2 default 1)
+
+5. Function.length Property
+- functionName.length → কতগুলো parameter define করা হয়েছে তা দেখায়।
+- Example:
+  console.log(add.length); // 2
+
+📌 Summary
+- Argument না দিলে parameter undefined হয় → NaN হতে পারে।
+- Default parameter ব্যবহার করলে missing argument এর জন্য fallback মান পাওয়া যায়।
+- ES6 এ default parameter introduce হয়েছে।
+- function.length → parameter count দেখায়।
 
 
+30-3 Template string, multiple line string, dynamic string
+
+===============================
+Template String, Multiple Line String, Dynamic String (ES6)
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Template string কী?
+- Multiple line string কীভাবে লেখা যায়?
+- Dynamic string কীভাবে কাজ করে?
+- কেন template string ব্যবহার করা হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Template String
+- ES6 এ introduce হয়েছে।
+- Backtick (`) ব্যবহার করে লেখা হয়।
+- Variable বা expression embed করা যায় → ${variableName}
+- Example:
+  const countryName = "Bangladesh";
+  const anthem = `Amar shonar ${countryName} ami tomai valobashi`;
+  console.log(anthem);
+
+2. Multiple Line String
+- Template string দিয়ে একাধিক লাইনে string লেখা যায়।
+- Normal string (" ") বা (' ') দিয়ে multiple line লেখা যায় না।
+- Example:
+  const somme = `jfieof
+  fee
+  ewre
+  rewew`;
+
+3. Dynamic String
+- Template string এর মধ্যে variable বা expression বসানো যায়।
+- Example:
+  const name = "Nahid";
+  const greet = `Hello ${name}, welcome to ES6!`;
+  console.log(greet);
+
+4. Problem with Normal String
+- Normal string এ multiple line লেখা যায় না।
+- Example:
+  // const some = "jglks
+  // gsag"; // ❌ Syntax Error
+
+📌 Summary
+- Template string → backtick দিয়ে লেখা হয়।
+- Multiple line string → template string দিয়ে সহজে লেখা যায়।
+- Dynamic string → ${variable} দিয়ে variable বা expression embed করা যায়।
+- Normal string এ multiple line লেখা যায় না, template string এ যায়।
+
+
+30-4 Arrow function, multiple parameters, function body
+30-5 More Arrow functions and arrow functions
+
+===============================
+Arrow Function (ES6)
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Arrow function কী?
+- Multiple parameters কীভাবে handle করে?
+- Function body কীভাবে লেখা যায়?
+- Normal function vs Arrow function এর পার্থক্য কী?
+- Arrow function এর সুবিধা কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Normal Function
+function sum(num1, num2) {
+    return num1 + num2;
+}
+
+2. Arrow Function (Single Line)
+const sum2 = (num1, num2) => num1 + num2;
+// এক লাইনে হলে return লিখতে হয় না (implicit return)।
+
+3. Arrow Function (Multi Line)
+const sum3 = (num1, num2) => {
+    return num1 + num2;
+};
+// একাধিক লাইনে হলে return লিখতে হয়।
+
+4. Arrow Function (Single Parameter)
+const sum5 = (num1) => {
+    console.log("hello", num1);
+};
+
+5. Function Expression (Old Style)
+const sum8 = function(num1, num2) {
+    return num1 + num2;
+};
+
+6. Arrow Function (Another Example)
+const sum9 = (num1, num2) => {
+    return num1 + num2;
+};
+
+7. 3 Ways to Write Arrow Function
+const test = () => console.log("hello empty");   // empty body
+const square = x => x * x;                       // single parameter, implicit return
+const sum = (num1, num2) => num1 + num2;         // multiple parameters, single line
+
+8. Arrow Function with Event Listener
+// Normal function
+document.getElementById("title").addEventListener("click", function() {
+    console.log("hello");
+});
+
+// Arrow function
+document.getElementById("title").addEventListener("click", () => {
+    console.log("hello");
+});
+
+📌 Summary
+- Arrow function → ES6 এ introduce হয়েছে।
+- Syntax → const fn = (param1, param2) => { ... }
+- Single line → implicit return।
+- Multi line → explicit return দিতে হয়।
+- Single parameter হলে () বাদ দেওয়া যায় → x => x * x
+- Arrow function concise, readable, এবং lexical `this` binding করে।
+- Normal function traditional syntax, hoisting হয়।
+
+
+
+30-6 Spread operator, array max, copy arrays
+===============================
+Spread Operator, Array Max, Copy Arrays (ES6)
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Spread operator কী?
+- Array থেকে maximum value কীভাবে বের করা যায়?
+- Array copy করার উপায় কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Spread Operator (...)
+- Spread operator দিয়ে array বা object এর elements আলাদা করে ব্যবহার করা যায়।
+- Example:
+  const friends = ["sokina", "joriina", "nahida"];
+  console.log(friends);       // ['sokina', 'joriina', 'nahida']
+  console.log(...friends);    // sokina joriina nahida
+
+2. Array Merge with Spread
+- Spread operator দিয়ে নতুন array তৈরি করা যায়।
+- Example:
+  const newArray = ["hero alom", "fahim", ...friends];
+  console.log(newArray);
+  // ['hero alom', 'fahim', 'sokina', 'joriina', 'nahida']
+
+3. Array Max with Spread
+- Math.max() → একাধিক number এর মধ্যে সর্বোচ্চ মান বের করে।
+- Spread operator দিয়ে array এর সব elements pass করা যায়।
+- Example:
+  const numbers = [3,4,4,5,5,6,7,3,4343,656,43];
+  console.log(Math.max(...numbers)); // 4343
+
+4. Copy Arrays
+- Spread operator দিয়ে array copy করা যায়।
+- Example:
+  const copyFriends = [...friends];
+  console.log(copyFriends); // ['sokina', 'joriina', 'nahida']
+
+📌 Summary
+- Spread operator (...) → array/object এর elements আলাদা করে ব্যবহার করা যায়।
+- Math.max(...array) → array থেকে maximum value বের করা যায়।
+- [...array] → array copy করার সহজ উপায়।
+- Spread operator → array merge, copy, এবং function parameter এ ব্যবহার হয়।
+
+
+
+30-7 (advanced) Object and Array Destructuring
+===============================
+(Advanced) Object and Array Destructuring
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Object destructuring কী?
+- Array destructuring কী?
+- কেন destructuring ব্যবহার করা হয়?
+- Destructuring এর সুবিধা কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Object Destructuring
+- Object এর property গুলোকে আলাদা variable এ সহজে assign করা যায়।
+- Syntax → const {prop1, prop2} = objectName;
+- Example:
+  const hena = {
+      name: 'hena',
+      age: 10,
+      friends: ["hero alom", "bappa"],
+      status: "not found"
+  };
+
+  // Normal way:
+  // const henStatus = hena.status;
+  // const henName = hena.name;
+
+  // Destructuring way:
+  const { name, age, friends, status } = hena;
+  console.log(name); // hena
+
+2. Array Destructuring
+- Array এর elements কে আলাদা variable এ assign করা যায়।
+- Syntax → const [var1, var2] = arrayName;
+- Example:
+  const person = ["hero alom", {naam:"gias"}, "hena", "bapparaj"];
+
+  // Normal way:
+  // const nayok = person[0];
+  // const obj = person[1];
+
+  // Destructuring way:
+  const [test, obj, naam, sadNayok] = person;
+  console.log(sadNayok); // bapparaj
+
+3. সুবিধা
+- কোড ছোট ও readable হয়।
+- একসাথে multiple property বা element extract করা যায়।
+- Nested object/array থেকেও destructuring করা যায়।
+
+📌 Summary
+- Object destructuring → object property কে variable এ সহজে নেওয়া যায়।
+- Array destructuring → array element কে variable এ সহজে নেওয়া যায়।
+- Syntax → const {prop} = object; const [elem] = array;
+- Destructuring → কোড clean, readable এবং efficient করে।
+
+
+30-8 Keys, values, entries, delete, seal, freeze
+30-9 Loop through an object using for in, for of, object entries
+
+===============================
+Object Methods & Looping (ES6 Advanced)
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Object.keys(), Object.values(), Object.entries() কী করে?
+- Object.seal() এবং Object.freeze() এর মধ্যে পার্থক্য কী?
+- Object থেকে property delete করা যায় কীভাবে?
+- Object এর উপর loop চালানোর উপায় কী কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Object.keys()
+- Object এর সব property name (keys) array আকারে দেয়।
+- Example:
+  console.log(Object.keys(person)); // ['name', 'age', 'country']
+
+2. Object.values()
+- Object এর সব property value array আকারে দেয়।
+- Example:
+  console.log(Object.values(person)); // ['hena', 10, 'BD']
+
+3. Object.entries()
+- Object এর key-value pair গুলোকে array of arrays আকারে দেয়।
+- Example:
+  console.log(Object.entries(person));
+  // [['name','hena'], ['age',10], ['country','BD']]
+
+4. Object.seal()
+- নতুন property যোগ করা যাবে না।
+- কিন্তু existing property এর value পরিবর্তন করা যাবে।
+- Example:
+  Object.seal(person);
+
+5. Object.freeze()
+- নতুন property যোগ করা যাবে না।
+- existing property এর value পরিবর্তনও করা যাবে না।
+- Example:
+  Object.freeze(person);
+
+6. Delete Property
+- delete operator দিয়ে property remove করা যায়।
+- Example:
+  delete person.age;
+
+7. Looping Through Object
+- for...in → keys এর উপর loop চালায়।
+- Example:
+  for (let key in person) {
+    console.log(`key: ${key} value: ${person[key]}`);
+  }
+
+- for...of → Object.entries() এর সাথে ব্যবহার হয়।
+- Example:
+  for (let key of Object.entries(person)) {
+    console.log(key);
+  }
+  // ['name','hena'], ['age',10], ['country','BD']
+
+- Destructuring সহ for...of
+  for (let [key, value] of Object.entries(person)) {
+    console.log(`key: ${key} value: ${value}`);
+  }
+
+📌 Summary
+- Object.keys() → সব property name array আকারে।
+- Object.values() → সব property value array আকারে।
+- Object.entries() → সব key-value pair array আকারে।
+- Object.seal() → নতুন property যোগ করা যাবে না, value পরিবর্তন করা যাবে।
+- Object.freeze() → নতুন property যোগ করা যাবে না, value পরিবর্তনও করা যাবে না।
+- delete → property remove করে।
+- Looping → for...in (keys), for...of + Object.entries() (key-value pair)।
+
+30-10 Module Summary and ES6 Practice Problems
+===============================
+Module Summary & ES6 Practice Problems
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- var, let, const এর পার্থক্য কী?
+- Template string কীভাবে কাজ করে?
+- Function declaration বনাম arrow function এর পার্থক্য কী?
+- Spread operator কীভাবে কাজ করে?
+- Object এবং Array destructuring কীভাবে কাজ করে?
+- Object methods (keys, values, entries, seal, freeze) কীভাবে ব্যবহার হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. var, let, const
+- var → function-scoped, hoisting হয়, redeclare করা যায়।
+- let → block-scoped, reassign করা যায়, redeclare করা যায় না।
+- const → block-scoped, reassign করা যায় না, কিন্তু array/object এর ভিতরের মান পরিবর্তন করা যায়।
+
+2. Template String
+- Backtick (`) ব্যবহার করে লেখা হয়।
+- Multiple line string লেখা যায়।
+- Variable embed করা যায় → ${variable}
+- Example:
+  console.log(`ami tomai valobasgi 
+      sdjfbsdfsdl
+      ${age}
+  `);
+
+3. Function vs Arrow Function
+- Normal function:
+  function sum(num1, num2) {
+      return num1 + num2;
+  }
+- Arrow function (single line):
+  const sum2 = (num1, num2) => num1 + num2;
+- Arrow function (multi line):
+  const sum3 = (num1, num2) => {
+      return num1 + num2;
+  };
+
+4. Spread Operator
+- Array এর elements আলাদা করে ব্যবহার করা যায়।
+- Example:
+  const numbers = [1, 2, 43, 5, 55];
+  console.log(...numbers); // 1 2 43 5 55
+
+5. Object Destructuring
+- Object property কে variable এ সহজে নেওয়া যায়।
+- Example:
+  const person = { name: "hena", age: 10 };
+  const { name, age } = person;
+  console.log(name, age); // hena 10
+
+6. Array Destructuring
+- Array element কে variable এ সহজে নেওয়া যায়।
+- Example:
+  const frnd = ["heor alom", "jokina"];
+  const [first, second] = frnd;
+  console.log(first, second); // heor alom jokina
+
+7. Object Methods
+- Object.keys(obj) → সব property name array আকারে।
+- Object.values(obj) → সব property value array আকারে।
+- Object.entries(obj) → সব key-value pair array আকারে।
+- Object.seal(obj) → নতুন property যোগ করা যাবে না, কিন্তু value পরিবর্তন করা যাবে।
+- Object.freeze(obj) → নতুন property যোগ করা যাবে না, value পরিবর্তনও করা যাবে না।
+
+📌 Summary
+- var, let, const → scope এবং reassign/redeclare এর পার্থক্য।
+- Template string → multiple line + dynamic variable embed।
+- Arrow function → concise syntax, implicit return।
+- Spread operator → array/object expand।
+- Destructuring → object/array থেকে সহজে মান বের করা যায়।
+- Object methods → keys, values, entries, seal, freeze দিয়ে object control করা যায়।
 
 
 
