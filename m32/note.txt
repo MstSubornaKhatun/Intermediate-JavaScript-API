@@ -1,0 +1,180 @@
+===============================
+32-0 Module Overview: Primitive vs Non-Primitive Data Types
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Primitive data type কী?
+- Non-primitive data type কী?
+- Immutable বনাম Mutable এর পার্থক্য কী?
+- Copy করলে মান পরিবর্তন হয় কীভাবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Primitive Data Types
+- Primitive → একক মান (single value)।
+- Immutable → মান পরিবর্তন করলে copy তে প্রভাব পড়ে না।
+- উদাহরণ: string, number, boolean, null, undefined, symbol, bigint।
+
+Example:
+let person = "solim saheb";
+let newPerson = person; // copy value
+person = "hero alom";
+console.log(newPerson); // solim saheb (immutable → পরিবর্তন হয়নি)
+
+2. Non-Primitive Data Types
+- Non-primitive → একাধিক মান (multiple values) রাখতে পারে।
+- Mutable → মান পরিবর্তন করলে copy তে প্রভাব পড়ে।
+- উদাহরণ: object, array, function।
+
+Example:
+let person2 = { name: "gias uddin" };
+let newPerson2 = person2;
+person2.name = "hero alom";
+console.log(newPerson2); // { name: "hero alom" } (mutable → পরিবর্তন হয়েছে)
+
+📌 Summary
+- Primitive → single value, immutable।
+- Non-primitive → multiple values, mutable।
+- Primitive copy করলে নতুন মান পরিবর্তন হয় না।
+- Non-primitive copy করলে reference থাকে, তাই মান পরিবর্তন হলে copy তেও পরিবর্তন হয়।
+
+
+===============================
+32-1 Null vs Undefined & Ways to Get Undefined
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- null কী?
+- undefined কী?
+- null vs undefined এর পার্থক্য কী?
+- কোন কোন ক্ষেত্রে undefined পাওয়া যায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. null in JavaScript
+- null → একটি special value যা "empty" বা "no value" বোঝায়।
+- typeof null → "object" (JavaScript এর bug/quirk)।
+- Example:
+  let name5 = null;
+  console.log(name5);        // null
+  name5 = "hero";
+  console.log(name5);        // hero
+  console.log(typeof name5); // object
+
+2. undefined in JavaScript
+- undefined → মান assign করা হয়নি বা পাওয়া যায়নি।
+- typeof undefined → "undefined"।
+- Example:
+  let name3;
+  console.log(name3); // undefined
+
+3. Different Ways to Get Undefined
+- Variable declare করা হয়েছে কিন্তু মান দেওয়া হয়নি।
+  let x;
+  console.log(x); // undefined
+
+- Function parameter pass করা হয়নি।
+  function sum(num1, num2) {
+      console.log(num1, num2);
+  }
+  sum();   // undefined undefined
+  sum(2);  // 2 undefined
+
+- Function কিছু return করেনি।
+  function sum(num1, num2) {
+      console.log(num1 + num2);
+  }
+  const result = sum(10, 20);
+  console.log(result); // undefined
+
+- Function এ শুধু return; লেখা হয়েছে।
+  function sum(num1, num2) {
+      return;
+  }
+  console.log(sum(10, 20)); // undefined
+
+- Object property নেই।
+  const person = { name: "sofiul" };
+  console.log(person.age); // undefined
+
+- Reference error (variable নেই)।
+  console.log(namesss); // ReferenceError → namesss is not defined
+
+4. Example: sum function
+function sum(num1, num2) {
+    console.log(num1, num2);
+}
+console.log(sum(10, 20)); // 10 20 → undefined (কারণ return নেই)
+
+📌 Summary
+- null → "no value", manually assign করা হয়, typeof → object।
+- undefined → "not assigned" বা "not found", typeof → undefined।
+- Ways to get undefined:
+  - Variable declare but not assigned।
+  - Function parameter missing।
+  - Function return না করা।
+  - Object property না থাকা।
+  - Reference error।
+
+
+===============================
+32-2 Different Truthy and Falsy Values in JavaScript
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Truthy value কী?
+- Falsy value কী?
+- কোন কোন মান truthy আর কোনগুলো falsy?
+- Boolean conversion (!, !!) কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Truthy Values
+- যেকোনো মান যা Boolean এ রূপান্তর করলে true হয়।
+- উদাহরণ:
+  "SUBORNA ISLAM"   → truthy (non-empty string)
+  "false"           → truthy (string, empty নয়)
+  434               → truthy (positive number)
+  -434              → truthy (negative number)
+  {}                → truthy (empty object)
+  {name:"gias"}     → truthy (non-empty object)
+  []                → truthy (empty array)
+  function(){}      → truthy (function)
+
+2. Falsy Values
+- যেকোনো মান যা Boolean এ রূপান্তর করলে false হয়।
+- উদাহরণ:
+  ""                → falsy (empty string)
+  false             → falsy
+  0                 → falsy
+  null              → falsy
+  undefined         → falsy
+  NaN               → falsy
+
+3. Example: Truthy Check
+const name = "SUBORNA ISLAM";
+if(name){
+    console.log("this is truthy value");
+} else {
+    console.log("this is falsy value");
+}
+// Output: this is truthy value
+
+4. Boolean Conversion
+const nam = "sorna";
+console.log(name == true); // false (string != boolean)
+console.log(!name);        // false (negation → string truthy)
+console.log(!!name);       // true (double negation → convert to boolean)
+
+5. Example: Falsy Check
+const naam = "";
+if(!naam) console.log("true"); // Output: true
+
+📌 Summary
+- Truthy → non-empty string, non-zero number, object, array, function।
+- Falsy → empty string, false, 0, null, undefined, NaN।
+- !value → Boolean negation।
+- !!value → Boolean conversion (true/false এ রূপান্তর)।
+
+
+

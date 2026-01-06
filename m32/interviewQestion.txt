@@ -1,0 +1,116 @@
+ইন্টারভিউ প্রশ্ন
+
+এই মডিউল এ আমরা কয়েকটা জিনিস দেখবো। সেখান থেকে কয়েকটা জিনিস ইন্টারভিউতে প্রায়ই জিজ্ঞেস করে বসে। 
+
+১. জাভাস্ক্রিপ্ট কী কী ডাটা টাইপের ভেরিয়েবল আছে?
+
+২. জাভাস্ক্রিপ্ট ফাংশন, বা array কি টাইপের জিনিস ? 
+
+৩. জাভাস্ক্রিপ্ট এ array যদি অবজেক্ট হয় তাহলে কিভাবে চেক করবে কোন একটা ভেরিয়েবল একটা array নাকি array না?
+
+৪. এর মধ্যে undefined আর null এর মধ্যে ডিফারেন্স কি। 
+
+৫. double equal (==) আর triple equal (===) এই দুইটার মধ্যে ডিফারেন্স কি। 
+
+৬. implicit conversion কি জিনিস? এটা কখন হয়?
+
+৭. এছাড়াও জাভাস্ক্রিপ্ট এ কয়েক ধরনের স্কোপ আছে। এই স্কোপ গুলার মধ্যে ডিফারেন্স কি। কখন কোনটা হয়। 
+
+৮. ব্লক স্কোপ কি জিনিস? let, const কি টাইপের স্কোপ তৈরি করে?
+
+৯. (এডভান্সড) Closure কি জিনিস? এইটা কিভাবে কাজ করে?
+
+১০. Callback function কি জিনিস?
+
+১১. Hoisting কি জিনিস? (গুগলে সার্চ দিয়ে আরো ভালো করে শিখো )
+
+১২. (এডভান্সড) কি ধরণের ভেরিয়েবল reference দিয়ে ফাংশনে পাঠানো হয় আর কোন ধরণের ভেরিয়েবল value হিসেবে পাঠানো হয়। 
+
+
+
+
+
+The Alchemist নামে একটা বই পড়ছিলাম। যেখানে Paulo Coelho বলছিলেন--
+
+“When we love, we always strive to become better than we are. When we strive to become better than we are, everything around us becomes better too.”
+
+
+
+
+
+
+Interview Questions & Answers (JavaScript)
+
+1. প্রশ্ন: জাভাস্ক্রিপ্ট কী কী ডাটা টাইপের ভেরিয়েবল আছে?
+   উত্তর: 
+   Primitive Types → string, number, bigint, boolean, undefined, symbol, null
+   Non-Primitive Types → object (array, function, date ইত্যাদি)
+
+2. প্রশ্ন: জাভাস্ক্রিপ্ট ফাংশন, বা array কি টাইপের জিনিস?
+   উত্তর:
+   Function → object
+   Array → object (special form, index-based)
+
+3. প্রশ্ন: জাভাস্ক্রিপ্ট এ array যদি অবজেক্ট হয় তাহলে কিভাবে চেক করবে কোন একটা ভেরিয়েবল একটা array নাকি array না?
+   উত্তর:
+   Array.isArray(variable)   // সবচেয়ে নির্ভরযোগ্য
+   variable instanceof Array // কাজ করে, কিন্তু সবসময় নয়
+
+4. প্রশ্ন: undefined আর null এর মধ্যে ডিফারেন্স কি?
+   উত্তর:
+   undefined → declare করা হয়েছে কিন্তু value নেই
+   null → ইচ্ছা করে empty value দেওয়া হয়েছে
+
+5. প্রশ্ন: double equal (==) আর triple equal (===) এই দুইটার মধ্যে ডিফারেন্স কি?
+   উত্তর:
+   ==  → loose equality (type conversion করে compare করে)
+   === → strict equality (type ও value দুটোই match করতে হবে)
+
+6. প্রশ্ন: implicit conversion কি জিনিস? এটা কখন হয়?
+   উত্তর:
+   জাভাস্ক্রিপ্ট স্বয়ংক্রিয়ভাবে type পরিবর্তন করে।
+   উদাহরণ:
+   "5" + 2 → "52"
+   "5" - 2 → 3
+
+7. প্রশ্ন: জাভাস্ক্রিপ্ট এ কয়েক ধরনের স্কোপ আছে। এই স্কোপ গুলার মধ্যে ডিফারেন্স কি?
+   উত্তর:
+   Global Scope → পুরো প্রোগ্রামে accessible
+   Function Scope → ফাংশনের ভিতরে declare করা ভেরিয়েবল শুধু ওই ফাংশনে কাজ করে
+   Block Scope → {} ব্লকের ভিতরে declare করা ভেরিয়েবল শুধু ওই ব্লকে কাজ করে
+
+8. প্রশ্ন: ব্লক স্কোপ কি জিনিস? let, const কি টাইপের স্কোপ তৈরি করে?
+   উত্তর:
+   let, const → block scope তৈরি করে
+   var → function scope তৈরি করে
+
+9. প্রশ্ন: (এডভান্সড) Closure কি জিনিস? এইটা কিভাবে কাজ করে?
+   উত্তর:
+   Closure = function + lexical scope
+   Inner function outer function-এর ভেরিয়েবল access করতে পারে।
+   উদাহরণ:
+   function outer() {
+     let count = 0;
+     return function inner() {
+       count++;
+       return count;
+     }
+   }
+
+10. প্রশ্ন: Callback function কি জিনিস?
+    উত্তর:
+    অন্য ফাংশনের argument হিসেবে পাঠানো ফাংশন।
+    উদাহরণ:
+    setTimeout(() => { console.log("Hello"); }, 1000);
+
+11. প্রশ্ন: Hoisting কি জিনিস?
+    উত্তর:
+    ভেরিয়েবল ও ফাংশন declaration উপরে তুলে আনা হয়।
+    উদাহরণ:
+    console.log(a); // undefined
+    var a = 5;
+
+12. প্রশ্ন: (এডভান্সড) কি ধরণের ভেরিয়েবল reference দিয়ে ফাংশনে পাঠানো হয় আর কোন ধরণের ভেরিয়েবল value হিসেবে পাঠানো হয়?
+    উত্তর:
+    Primitive types → pass by value
+    Non-primitive types (object, array, function) → pass by reference
