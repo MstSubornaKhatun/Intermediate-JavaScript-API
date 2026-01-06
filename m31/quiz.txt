@@ -1,0 +1,204 @@
+Question 01
+
+what dose array method map() creates?
+
+
+A
+An object
+
+-->B
+A new array
+
+correct-green-icon
+C
+nothing
+
+Your answer is correct!
+
+Question 02
+
+what will be the output?
+
+function min(nums) { return Math.min(nums) }
+console.log(min( [1,3,2 ]));
+
+-->A
+NaN
+
+correct-green-icon
+B
+3
+
+C
+undefined
+
+Your answer is correct!
+
+Question 03
+
+What will be the output? 
+
+const cube=x=> x*x*x; 
+console.log(cube(2))
+
+A
+2
+
+B
+4
+
+C
+6
+
+-->D
+8
+
+correct-green-icon
+Your answer is correct!
+
+Question 04
+
+what would be the output? 
+
+const [a, b] = [1,2,3,4,45,5]; 
+console.log(a+b);
+
+A
+[1,2]
+
+-->B
+3
+
+correct-green-icon
+C
+2
+
+D
+none
+
+Your answer is correct!
+
+Question 05
+
+What will the filter method return?
+
+
+A
+Only the first matching element.
+
+-->B
+An array containing all the matching elements
+
+correct-green-icon
+C
+All elements
+
+D
+Empty array
+
+Your answer is correct!
+
+Question 06
+
+what will be the value of y? 
+
+const {x, y, z} = {x: 1, y1: 2, z: 3};
+
+A
+2
+
+B
+3
+
+-->C
+undefined
+
+correct-green-icon
+D
+NaN
+
+Your answer is correct!
+
+Question 07
+
+What will be the output? (Try it out. It’s tricky.) 
+
+const nums = [1,2,3,4,5];
+let output = nums.filter(n => n%2);
+console.log(output);
+
+A
+[2,4]
+
+B
+[]
+
+-->C
+[1,3,5]
+
+correct-green-icon
+D
+[1,2,3,4,5]
+
+Your answer is correct!
+
+Question 08
+
+How will you find the first friend with a name with 5 characters? 
+
+const friends = ["Moushumi", "Misha", "Manna", "mimi" , "mahiya"];
+
+A
+friends.find( friend.length ==5);
+
+B
+friends.filter(friend => friend.length ==5);
+
+-->C
+friends.find(friend => friend.length ==5);
+
+correct-green-icon
+Your answer is correct!
+
+Question 09
+
+How will you get the price from the product object?
+
+
+
+const product = {name: 'Laptop', model:'Yoga 3', price:49000, dusk: '512SSD'}
+
+-->A
+const {price} = product;
+
+correct-green-icon
+B
+const {product.price} = product;
+
+C
+const {price} = product.price;
+
+D
+const {product} = product;
+
+Your answer is correct!
+
+Question 10
+
+How will you create an instance of Person Class ?
+
+
+A
+const student : new Person()
+
+B
+const student = New Person()
+
+-->C
+const student = new Person()
+
+correct-green-icon
+D
+const student == new Person()
+
+Your answer is correct!

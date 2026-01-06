@@ -379,3 +379,286 @@ xiaomi.details();
 - Object → class থেকে তৈরি হয়।
 - Method → class এর ভিতরে function, object এর behavior define করে।
 - এক class থেকে multiple object তৈরি করা যায়।
+
+
+===============================
+31-7 (Optional) Inheritance & Prototypical Inheritance
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Object কী?
+- Class কীভাবে কাজ করে?
+- Constructor কী?
+- Inheritance কী?
+- Prototypical inheritance কীভাবে কাজ করে?
+- Encapsulation কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Object
+- Object হলো property (attribute/state) + method (function/procedure) এর সমন্বয়।
+- Example:
+  const bike = {
+      name: "Yamaha",
+      price: 100000,
+      move: function() {
+          console.log("ami colacol korte pari");
+      }
+  };
+
+2. Class
+- Class হলো object তৈরির template বা blueprint।
+- Example:
+  class Vehicle {
+      constructor(name, price) {
+          this.name = name;
+          this.price = price;
+      }
+      move() {
+          console.log("ami colacol korte pari");
+      }
+  }
+
+3. Constructor
+- Constructor হলো special method যা object তৈরি হওয়ার সময় automatically call হয়।
+- Object এর property initialize করতে ব্যবহৃত হয়।
+- Example:
+  const car = new Vehicle("Toyota", 200000);
+
+4. Inheritance
+- Inheritance মানে হলো parent class এর property এবং method child class এ পাওয়া।
+- যেমন বাবা তার বাবার property পেয়েছে, সন্তানও বাবার property পাবে।
+- Example:
+  class Bus extends Vehicle {
+      constructor(name, price, seat) {
+          super(name, price); // parent class এর property use করা
+          this.seat = seat;   // extra property শুধু Bus এর জন্য
+      }
+      route() {
+          console.log("dhaka to cox");
+      }
+  }
+
+  const greenLine = new Bus("greenLine", 12, 50);
+  greenLine.move();  // ami colacol korte pari
+  greenLine.route(); // dhaka to cox
+
+5. Another Child Class
+class Truck extends Vehicle {
+    constructor(name, price, load) {
+        super(name, price);
+        this.load = load;
+    }
+}
+
+const tata = new Truck("Tata", 500000, 2000);
+
+6. Prototypical Inheritance
+- JavaScript এ প্রতিটি object এর একটি prototype থাকে।
+- Prototype chain এর মাধ্যমে property/method খোঁজা হয়।
+- Base class → prototype → subclass instance।
+- Example:
+  Vehicle → Bus → greenLine
+  Vehicle → Truck → tata
+
+7. Encapsulation
+- Class এর ভিতরে property + method একসাথে রাখা।
+- Object এর data এবং behavior একসাথে bundle করা।
+
+📌 Summary
+- Object → property + method।
+- Class → object তৈরির blueprint।
+- Constructor → object তৈরি হওয়ার সময় property initialize করে।
+- Inheritance → parent class এর property/method child class এ পাওয়া যায়।
+- Prototypical inheritance → প্রতিটি object এর prototype থাকে, chain এর মাধ্যমে property/method পাওয়া যায়।
+- Encapsulation → class এর ভিতরে property এবং method bundle করা।
+
+
+===============================
+31-8 (Optional) Encapsulation & this keyword
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- JavaScript এ this কী বোঝায়?
+- this keyword কোথায় কিভাবে কাজ করে?
+- Encapsulation কী?
+- Private property (#) কেন ব্যবহার করা হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. What is `this`?
+- JavaScript এ `this` keyword একটি object কে নির্দেশ করে।
+- Context অনুযায়ী `this` ভিন্ন object কে নির্দেশ করে:
+  - Alone → global object (browser এ window)।
+  - Function এ → global object।
+  - Function এ (strict mode) → undefined।
+  - Object method এ → সেই object।
+  - Event এ → সেই element যেটি event পেয়েছে।
+  - call(), apply(), bind() → `this` কে যেকোনো object এ bind করা যায়।
+
+⚠️ Note:
+- `this` একটি keyword, variable নয়।
+- এর মান পরিবর্তন করা যায় না।
+
+2. Example: Global Context
+console.log(this); // window
+
+function sum() {
+    console.log(this); // window
+}
+sum();
+
+3. Example: Object Method
+const person = {
+    name: "sonali",
+    action: function () {
+        console.log(this.name);
+    }
+};
+person.action(); // sonali
+
+4. Encapsulation
+- Encapsulation মানে হলো class এর ভিতরে property এবং method bundle করে রাখা।
+- Data hide করা যায় → বাইরে থেকে সরাসরি access করা যায় না।
+- Banking system বা sensitive data এর জন্য ব্যবহার হয়।
+
+5. Example: Class with Encapsulation
+class Person {
+    #status; // private property
+
+    constructor(name, age, status) {
+        this.name = name;
+        this.age = age;
+        this.#status = status;
+    }
+
+    sleep() {
+        console.log(`${this.name} sleep at 10PM`);
+    }
+
+    action() {
+        console.log(this.status); // এখানে ভুল, কারণ #status private
+    }
+}
+
+const solimUddin = new Person("solim", 12, "single");
+console.log(solimUddin); // Person {name: 'solim', age: 12}
+solimUddin.sleep();      // solim sleep at 10PM
+
+const kolimUddin = new Person("kolim", 12);
+console.log(kolimUddin);
+kolimUddin.sleep();
+
+console.log(solimUddin.status); // undefined
+solimUddin.action();            // single (method এর মাধ্যমে access)
+
+⚠️ Private property (#status)
+- Class এর বাইরে থেকে সরাসরি access করা যায় না।
+- শুধু class এর ভিতরের method দিয়ে access করা যায়।
+
+📌 Summary
+- `this` keyword → context অনুযায়ী object কে নির্দেশ করে।
+- Object method এ → সেই object কে নির্দেশ করে।
+- Encapsulation → property + method bundle করে data hide করা।
+- Private property (#) → class এর বাইরে থেকে access করা যায় না।
+- Sensitive data (যেমন banking system) এর জন্য Encapsulation ব্যবহার হয়।
+
+
+===============================
+31-9 Module Summary and ES6 Topics
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Object methods (keys, values, entries) কীভাবে কাজ করে?
+- Dot notation বনাম Bracket notation এর পার্থক্য কী?
+- Optional chaining কীভাবে কাজ করে?
+- Array map কীভাবে কাজ করে?
+- forEach, filter, find এর কাজ কী?
+- Class এবং Inheritance কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Object Methods
+const person = {
+    name: "gias",
+    age: 12,
+    1: 100,
+    father: { name: "sjhdfb", age: 12 }
+};
+
+console.log(Object.keys(person));   // ['name','age','1','father']
+console.log(Object.values(person)); // ['gias',12,100,{…}]
+console.log(Object.entries(person)); // [['name','gias'],['age',12],['1',100],['father',{…}]]
+
+2. Accessing Properties
+console.log(person.name);       // gias
+console.log(person["name"]);    // gias
+console.log(person[1]);         // 100
+
+3. Optional Chaining
+console.log(person?.mother?.name); // undefined (error হবে না)
+
+4. Array map
+const numbers = [1,2,3,4,4,5,56];
+const newNumbers = numbers.map(num => num * num);
+console.log(newNumbers); // [1,4,9,16,16,25,3136]
+
+5. Array Methods with Products
+const products = [
+    { id: 1, name: "iphone", color: "black", price: 1200, brand: "apple" },
+    { id: 2, name: "xiaomi", color: "gold", price: 100, brand: "xiaomi" },
+    { id: 3, name: "samsung", color: "gold", price: 1500, brand: "sam" },
+    { id: 4, name: "iphone", color: "gold", price: 1000, brand: "apple" },
+    { id: 5, name: "xiaomi", color: "black", price: 1100, brand: "xiaomi" }
+];
+
+- find → প্রথম matching element return করে
+const singleProduct = products.find(p => p.color === "gold");
+console.log(singleProduct); // {id:2, name:'xiaomi', color:'gold', price:100, brand:'xiaomi'}
+
+- filter → শর্ত অনুযায়ী নতুন array return করে
+const newProduct = products.filter(p => p.id != 3);
+console.log(newProduct);
+
+- forEach → শুধু loop চালায়, return করে না
+products.forEach(p => {
+    if(p.name === "iphone"){
+        console.log(p);
+    }
+});
+
+6. Class and Inheritance
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+class Hena extends Person {
+    constructor(name, age, status) {
+        super(name, age);
+        this.status = status;
+    }
+}
+
+const hena = new Person("hena", 21);
+console.log(hena); // Person {name:'hena', age:21}
+
+📌 Summary
+- Object.keys(), Object.values(), Object.entries() → object এর property access করার জন্য।
+- Dot notation → সাধারণ property access, Bracket notation → special key access।
+- Optional chaining → property না থাকলে error না দিয়ে undefined দেয়।
+- Array.map() → প্রতিটি element transform করে নতুন array দেয়।
+- forEach → শুধু loop চালায়।
+- filter → শর্ত অনুযায়ী নতুন array দেয়।
+- find → প্রথম matching element দেয়।
+- Class → object তৈরির blueprint।
+- Inheritance → parent class এর property/method child class এ পাওয়া যায়।
+
+
+
+
+
+
+
