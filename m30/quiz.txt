@@ -1,0 +1,209 @@
+Question 01
+
+The Object.freeze() method in JavaScript is used to:
+
+
+A
+Prevent object creation
+
+B
+Prevent code execution
+
+-->C
+Prevent modification of an object's existing properties
+
+correct-green-icon
+Your answer is correct!
+
+Question 02
+
+The spread operator in JavaScript is denoted by:
+
+
+-->A
+...
+
+correct-green-icon
+B
+::
+
+C
+**
+
+D
+++
+
+Your answer is correct!
+
+Question 03
+
+How can you declare an arrow function with no parameters
+
+
+A
+const myFunc = => console.log('Nayok!');
+
+-->B
+const myFunc = () => console.log('Nayok!');
+
+correct-green-icon
+C
+const myFunc => console.log('Nayok!')
+
+D
+Arrow functions must receive parameter values.
+
+Your answer is correct!
+
+Question 04
+
+const nayikas=['mousumi' , 'popy' ,'shabnur', 'purnima' ]
+How can you make a copy of nayikas using a spread operator?
+
+
+A
+const array2=...nayikas
+
+B
+const array2=[nayikas]
+
+-->C
+const array2 = [...nayikas]
+
+correct-green-icon
+D
+const array2nayikas]
+
+Your answer is correct!
+
+Question 05
+
+const mobile = {
+ brand: 'Samsung',
+ model:'S4'
+};
+How would you remove the 'model' property from a mobile object?
+
+
+-->A
+delete mobile.model
+
+correct-green-icon
+B
+remove mobile.model
+
+C
+null mobile.model
+
+D
+none
+
+Your answer is correct!
+
+Question 06
+
+What is the correct syntax for an arrow function in JavaScript?
+
+
+A
+function myFunction() => {}
+
+B
+(myFunction) => {}
+
+-->C
+const myFunction = () => {}
+
+correct-green-icon
+D
+const myFunction => {}
+
+Your answer is correct!
+
+Question 07
+
+const name = 'Hero'; const greetings = 'Welcome Home!'+' '+name;
+Re-write the greetings variable using ES6 template literals to print Welcome Home! Hero.
+
+
+A
+const greetings = 'Welcome Home!'+' '+name;
+
+B
+const greetings = 'Welcome Home! ${name';
+
+correct-green-icon
+-->C
+const greetings = `Welcome Home! ${name}`;
+
+D
+const greetings = 'Welcome Home!'+' '+${name};
+
+Your answer is wrong!
+Correct answer: (C)
+
+Question 08
+
+What is the final value of "obj" in the following example?
+
+const obj = { foo: 1 };
+obj.bar = 2;
+
+A
+{ foo: 1 }
+
+-->B
+{ foo: 1, bar: 2 }
+
+correct-green-icon
+C
+{ foo: 1, 2: bar }
+
+D
+None of the above
+
+Your answer is correct!
+
+Question 09
+
+Can you guess what the below code does?
+
+
+
+let a = 12, b = 3;
+
+[a, b] = [b, a];
+
+
+A
+Makes both a and b equal 12.
+
+-->B
+Swaps the values inside a and b, without using extra variables.
+
+correct-green-icon
+C
+Creates an array that contains a and b.
+
+Your answer is correct!
+
+Question 10
+
+How will you add 25 as the last element of the array?
+
+const numbers = [45, 12, 36, 84]
+
+A
+unshift()
+
+B
+shift()
+
+-->C
+push()
+
+correct-green-icon
+D
+pop()
+
+Your answer is correct!
