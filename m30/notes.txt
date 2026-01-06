@@ -1,0 +1,74 @@
+30-1 ES6 Intro difference between var, Let, and const
+
+===============================
+ES6 Intro: Difference between var, let, and const
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- var, let, const এর মধ্যে পার্থক্য কী?
+- কোনটা কখন ব্যবহার করা উচিত?
+- const দিয়ে array/object modify করা যায় কি?
+- ES6 এ নতুন কী সুবিধা এসেছে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+🔹 var
+- Function-scoped (পুরো function এ কাজ করে)।
+- Hoisting হয় → declaration উপরে উঠে যায়।
+- Redeclare করা যায়।
+- Example:
+  // console.log(name) → undefined (hoisting এর কারণে)
+  var name = "nahid";
+
+🔹 let
+- Block-scoped ({} এর মধ্যে সীমাবদ্ধ)।
+- Hoisting হয় না (temporal dead zone থাকে)।
+- Redeclare করা যায় না, কিন্তু reassign করা যায়।
+- Example:
+  let age = 10;
+  age = 11;
+  console.log(age); // 11
+
+🔹 const
+- Block-scoped।
+- Redeclare বা reassign করা যায় না।
+- কিন্তু array বা object এর ভিতরের value পরিবর্তন করা যায়।
+- Example:
+  const countryName = "bangladesh";
+  const friends = ["hena", "hero alom"];
+  friends.push("hamid");
+  console.log(friends); // ['hena', 'hero alom', 'hamid']
+
+🔹 const with loop
+- const দিয়ে loop এর ভিতরে element declare করলে প্রতিবার নতুন scope তৈরি হয়।
+- Example:
+  for (let i = 0; i < friends.length; i++) {
+    const element = friends[i];
+    console.log(element);
+  }
+
+🔹 const with object
+- const দিয়ে object declare করলে property পরিবর্তন করা যায়।
+- Example:
+  const person = { name: "gias uddin" };
+  person.name = "hsudhfbsi"; // allowed
+  console.log(person);
+
+📌 Summary
+- var → function-scoped, hoisting হয়, redeclare করা যায়।
+- let → block-scoped, reassign করা যায়, redeclare করা যায় না।
+- const → block-scoped, reassign করা যায় না, কিন্তু array/object এর ভিতরের value পরিবর্তন করা যায়।
+- ES6 → let এবং const introduce করেছে, যাতে scope control এবং bug কমানো যায়।
+
+
+30-2 Function default parameter for not provided values
+
+
+
+
+
+
+
+
+
+
