@@ -1,0 +1,381 @@
+===============================
+31-1 Module Introduction and Basic ES6 Recap
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Function parameter vs argument এর পার্থক্য কী?
+- Default parameter কীভাবে কাজ করে?
+- const এবং let এর ব্যবহার কীভাবে হয়?
+- Object এবং Array destructuring কীভাবে কাজ করে?
+- Spread operator কীভাবে কাজ করে?
+- Template string কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Function vs Argument
+- Parameter → function definition এ দেওয়া variable।
+- Argument → function call করার সময় দেওয়া মান।
+- Example:
+  function add(a, b) {
+      return a + b;
+  }
+  add(2, 2); // 4
+
+2. Default Parameter
+- ES6 এ default parameter feature এসেছে।
+- Argument না দিলে parameter এর default মান ব্যবহার হয়।
+- Example (without default):
+  function add(a, b) {
+      return a + b;
+  }
+  add(10); // NaN (কারণ b undefined)
+
+- Example (with default):
+  function add(a=0, b=0) {
+      return a + b;
+  }
+  add(10); // 10 (b default 0)
+
+3. const and let
+- const → reassign করা যায় না, কিন্তু object/array এর ভিতরের মান পরিবর্তন করা যায়।
+- let → block-scoped, reassign করা যায়।
+- Example:
+  const person = { name: "gias", age: 12 };
+  // delete person.name; // property delete করা যায়
+  console.log(person);
+
+4. Object Methods
+- Object.keys(obj) → সব property name array আকারে।
+- Object.values(obj) → সব property value array আকারে।
+- Object.entries(obj) → সব key-value pair array আকারে।
+
+5. Object Destructuring
+- Object property কে variable এ সহজে নেওয়া যায়।
+- Example:
+  const { age, name } = person;
+  console.log(age, name);
+
+6. Array Destructuring
+- Array element কে variable এ সহজে নেওয়া যায়।
+- Example:
+  const friends = ["rahim", "Bangladesh", "krim"];
+  const [first, second] = friends;
+  console.log(first, second); // rahim Bangladesh
+
+7. Spread Operator
+- Array এর elements আলাদা করে ব্যবহার করা যায়।
+- Example:
+  const newFriends = ["hero alom", ...friends];
+  console.log(newFriends);
+  // ['hero alom', 'rahim', 'Bangladesh', 'krim']
+
+8. Template String
+- Backtick (`) ব্যবহার করে লেখা হয়।
+- Multiple line string লেখা যায়।
+- Variable embed করা যায় → ${variable}
+- Example:
+  console.log(`
+      amar shonar ${friends[1]} ami tomai valo bashi
+  `);
+
+📌 Summary
+- Parameter → function variable, Argument → function call এর মান।
+- Default parameter → missing argument এর জন্য fallback মান।
+- const এবং let → ES6 এ নতুন scope control।
+- Object/Array destructuring → সহজে মান extract করা যায়।
+- Spread operator → array/object expand করা যায়।
+- Template string → multiple line + dynamic variable embed।
+
+
+===============================
+31-2 Access Value, Nested Object, Optional Chaining
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Object property কীভাবে access করা যায়?
+- Dot notation বনাম Bracket notation এর পার্থক্য কী?
+- Nested object থেকে মান কীভাবে পাওয়া যায়?
+- Optional chaining কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Object Property Access
+- Object এর property দুইভাবে access করা যায়:
+  - Dot notation → person.name
+  - Bracket notation → person["name"]
+
+- Example:
+  const person = { name: "hena", age: 30 };
+  console.log(person.name);       // hena
+  console.log(person["age"]);     // 30
+
+2. Special Keys
+- যদি property key number বা boolean হয় → bracket notation ব্যবহার করতে হবে।
+- Example:
+  const person = { 1: "100", true: "stto" };
+  console.log(person[1]);     // 100
+  console.log(person[true]);  // stto
+
+3. Nested Object Access
+- Nested object এর property access করতে dot বা bracket notation ব্যবহার করা যায়।
+- Example:
+  console.log(person.details.job);              // yes
+  console.log(person["details"]["father"].name); // hjsdbfs
+
+4. Optional Chaining (?.)
+- Nested property না থাকলে error না দিয়ে undefined return করে।
+- Example:
+  console.log(person.details?.mother?.name); // undefined (error হবে না)
+
+📌 Summary
+- Dot notation → সাধারণ property access।
+- Bracket notation → special key (number, boolean, space থাকা string) access।
+- Nested object → একাধিক স্তরের property access করা যায়।
+- Optional chaining → property না থাকলে error না দিয়ে safe ভাবে undefined দেয়।
+
+
+===============================
+31-3 Array.map() → One-line Loop Magic
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Array.map() কীভাবে কাজ করে?
+- for loop এর কাজ map দিয়ে কীভাবে ছোট করা যায়?
+- map এর মধ্যে return কখন দিতে হয়?
+- map দিয়ে index এবং value একসাথে পাওয়া যায় কীভাবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Traditional for Loop
+const numbers = [1,2,3,4,5,6];
+let temp = [];
+for (let index = 0; index < numbers.length; index++) {
+    const element = numbers[index];
+    const sum = element + 1;
+    temp.push(sum);
+}
+console.log(temp); // [2, 3, 4, 5, 6, 7]
+
+2. Using Array.map()
+- map দিয়ে একই কাজ এক লাইনে করা যায়।
+- Example:
+  const newArray = numbers.map(value => value + 1);
+  console.log(newArray); // [2, 3, 4, 5, 6, 7]
+
+3. map with Return
+- {} ব্যবহার করলে অবশ্যই return দিতে হবে।
+- Example:
+  const squareArray = numbers.map(element => {
+      return element * element;
+  });
+  console.log(squareArray); // [1, 4, 9, 16, 25, 36]
+
+4. map with Strings
+const bondhu = ["rahim", "karim", "hamin", "kaniz"];
+// Traditional loop
+for (let i = 0; i < bondhu.length; i++) {
+    console.log(bondhu[i]);
+}
+// map দিয়ে সহজে করা যায়
+const newFriends = bondhu.map(element => element);
+console.log(newFriends); // ['rahim','karim','hamin','kaniz']
+
+5. map with Index
+- map এর callback function এ দ্বিতীয় parameter হিসেবে index পাওয়া যায়।
+- Example:
+  const newFriends2 = bondhu.map((element, index) => {
+      console.log(index, element);
+  });
+  /*
+  0 rahim
+  1 karim
+  2 hamin
+  3 kaniz
+  */
+
+📌 Summary
+- for loop → traditional way, বেশি কোড লাগে।
+- map → এক লাইনে loop এর কাজ করে।
+- {} দিলে অবশ্যই return দিতে হয়।
+- map callback → (element, index) → value এবং index একসাথে পাওয়া যায়।
+- map → array transform করার জন্য সবচেয়ে বেশি ব্যবহার হয়।
+
+
+===============================
+31-4 forEach, filter, find, and Differences
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- forEach কীভাবে কাজ করে?
+- filter কীভাবে কাজ করে?
+- find কীভাবে কাজ করে?
+- এদের মধ্যে পার্থক্য কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+const products = [
+    { id: 1, name: "iphone", color: "black", price: 1200, brand: "apple" },
+    { id: 2, name: "xiaomi", color: "gold", price: 100, brand: "xiaomi" },
+    { id: 3, name: "samsung", color: "gold", price: 1500, brand: "sam" },
+    { id: 4, name: "iphone", color: "gold", price: 1000, brand: "apple" },
+    { id: 5, name: "xiaomi", color: "black", price: 1100, brand: "xiaomi" }
+];
+
+1. forEach → শুধু loop চালায়, নতুন array return করে না
+products.forEach(product => {
+    console.log(product);
+});
+
+products.forEach(product => {
+    if(product.color === "gold"){
+        console.log(product);
+    }
+});
+
+2. filter → শর্ত অনুযায়ী নতুন array তৈরি করে
+const newProducts = products.filter(product => product.price > 1000);
+console.log(newProducts);
+
+const nProducts = products.filter(p => p.id != 3);
+console.log(nProducts);
+
+3. find → শর্ত অনুযায়ী প্রথম matching element return করে
+const product = products.find(p => p.color === "gold");
+console.log(product);
+
+📌 Differences
+- forEach → শুধু loop চালায়, return করে না।
+- filter → শর্ত অনুযায়ী নতুন array return করে (multiple results)।
+- find → শর্ত অনুযায়ী প্রথম matching element return করে (single result)।
+
+
+===============================
+31-5 Recap: Map, forEach, filter, find, reduce
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- map কীভাবে কাজ করে?
+- forEach কীভাবে কাজ করে?
+- filter কীভাবে কাজ করে?
+- find কীভাবে কাজ করে?
+- reduce কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+const products = [
+    { id: 1, name: "iphone", color: "black", price: 1200, brand: "apple" },
+    { id: 2, name: "xiaomi", color: "gold", price: 100, brand: "xiaomi" },
+    { id: 3, name: "samsung", color: "gold", price: 1500, brand: "sam" },
+    { id: 4, name: "iphone", color: "gold", price: 1000, brand: "apple" },
+    { id: 5, name: "xiaomi", color: "black", price: 1100, brand: "xiaomi" }
+];
+
+1. map → নতুন array তৈরি করে, প্রতিটি element transform করা যায়
+const newProducts = products.map(p => {
+    if(p.brand === "apple"){
+        p.price = p.price + 100;
+    }
+    return p;
+});
+console.log(newProducts);
+
+2. forEach → শুধু loop চালায়, নতুন array return করে না
+products.forEach(product => {
+    if(product.brand === "apple"){
+        console.log(product);
+    }
+});
+
+3. find → শর্ত অনুযায়ী প্রথম matching element return করে
+const singleProduct = products.find(p => p.id == 3);
+console.log(singleProduct);
+
+4. filter → শর্ত অনুযায়ী নতুন array return করে (multiple results)
+const newProducts2 = products.filter(p => p.name === "iphone");
+console.log(newProducts2);
+
+5. reduce → সব element কে একত্রে একটি মানে পরিণত করে
+const totalPrice = products.reduce((acc, curr) => acc + curr.price, 0);
+console.log(totalPrice);
+
+📌 Differences
+- map → নতুন array তৈরি করে, প্রতিটি element transform হয়।
+- forEach → শুধু loop চালায়, return করে না।
+- filter → শর্ত অনুযায়ী নতুন array return করে (multiple results)।
+- find → শর্ত অনুযায়ী প্রথম matching element return করে (single result)।
+- reduce → সব element কে combine করে একটি মানে পরিণত করে।
+
+
+
+===============================
+31-6 (Optional) Introduction to Class and Objects
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Class কী?
+- Object কীভাবে তৈরি হয়?
+- Constructor কী কাজ করে?
+- Method কীভাবে কাজ করে?
+- Class থেকে multiple object তৈরি করা যায় কীভাবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Class
+- ES6 এ introduce হয়েছে।
+- Class হলো object তৈরির blueprint।
+- Syntax:
+  class ClassName {
+      constructor(parameters) {
+          this.property = value;
+      }
+      methodName() {
+          // code
+      }
+  }
+
+2. Constructor
+- Constructor হলো special method।
+- Object তৈরি হওয়ার সময় automatically call হয়।
+- Object এর property initialize করতে ব্যবহৃত হয়।
+
+3. Example Class
+class Product {
+    malik = "gias uddin";
+
+    constructor(name, price, brand, malik) {
+        this.name = name;
+        this.price = price;
+        this.brandName = brand;
+        this.malik = malik;
+    }
+
+    details() {
+        console.log(`ami ${this.name} product er details`);
+    }
+}
+
+4. Object তৈরি করা
+const iphone = new Product("iphone", "1234", "apple", "staphjobs");
+console.log(iphone);
+// Product { malik: 'staphjobs', name: 'iphone', price: '1234', brandName: 'apple' }
+
+iphone.details(); 
+// ami iphone product er details
+
+const xiaomi = new Product("redmi", 1000, "xiaomi", "jani na");
+console.log(xiaomi);
+// Product { malik: 'jani na', name: 'redmi', price: 1000, brandName: 'xiaomi' }
+
+xiaomi.details();
+// ami redmi product er details
+
+5. Method
+- Class এর ভিতরে function define করলে তাকে method বলে।
+- Object.methodName() দিয়ে call করা যায়।
+
+📌 Summary
+- Class → object তৈরির blueprint।
+- Constructor → object তৈরি হওয়ার সময় property initialize করে।
+- Object → class থেকে তৈরি হয়।
+- Method → class এর ভিতরে function, object এর behavior define করে।
+- এক class থেকে multiple object তৈরি করা যায়।
