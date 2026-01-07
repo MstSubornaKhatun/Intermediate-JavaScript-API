@@ -1,0 +1,228 @@
+Question 01
+
+API stands for-
+
+
+A
+Application Programmed Interface
+
+-->B
+Application Programming Interface
+
+correct-green-icon
+C
+Application Programable Interface
+
+D
+Application Program Infrad
+
+Your answer is correct!
+
+Question 02
+
+Fill in the gap
+
+fetch('https://jsonplaceholder.typicode.com/todo/1') 
+.then(response => response ____?___ )
+.then(json => console.log(json))
+
+A
+json
+
+B
+json()
+
+-->C
+.json()
+
+correct-green-icon
+D
+json.stringify()
+
+Your answer is correct!
+
+Question 03
+
+____?____('https://jsonplaceholder.typicode.com/posts/1')
+ .then(res => res.json())
+.then(json => console.log(json));
+
+A
+get
+
+B
+prefetch
+
+-->C
+fetch
+
+correct-green-icon
+D
+catch
+
+Your answer is correct!
+
+Question 04
+
+What will be the output? 
+
+
+
+const stuInfo = JSON.stringify({ name: "James", roll: 3 }); 
+console.log(stuInfo.name); 
+
+A
+James
+
+B
+null
+
+C
+3
+
+-->D
+undefined
+
+correct-green-icon
+Your answer is correct!
+
+Question 05
+
+What is the full form of JSON? 
+
+
+A
+JavaScript Object Nodes
+
+B
+JavaScript Objects Note
+
+-->C
+JavaScript Object Notation
+
+correct-green-icon
+D
+JavaScript Order of Nodes
+
+Your answer is correct!
+
+Question 06
+
+What do you think about why we use the POST method ? (If needed, google it!)
+
+
+A
+To get some data from server
+
+B
+To make dim post
+
+-->C
+To send some data to the server
+
+correct-green-icon
+D
+To update a particular data
+
+Your answer is correct!
+
+Question 07
+
+headers: { 'Content-type':___?___ },
+What will be “Content-Type ” if you want to send data in JSON format?
+
+
+-->A
+'application/json’
+
+correct-green-icon
+B
+'application/bson’
+
+C
+‘json/plain:’
+
+D
+‘text/html
+
+Your answer is correct!
+
+Question 08
+
+Which method will you use if you need to update a particular data?
+
+
+A
+GET
+
+B
+DELETE
+
+C
+MODIFY
+
+-->D
+PATCH
+
+correct-green-icon
+Your answer is correct!
+
+Question 09
+
+What status code will you get If the service is not available? (If needed , google it!)
+
+
+A
+403
+
+-->B
+503
+
+correct-green-icon
+C
+200
+
+D
+404
+
+Your answer is correct!
+
+Question 10
+
+What status code will you get for a successful API call? (If needed, google it!)
+
+
+A
+403
+
+-->B
+200
+
+correct-green-icon
+C
+404
+
+D
+420
+
+Your answer is correct!
+
+Question 11
+
+What is the purpose of the json() method in the Fetch API? (Google it if needed)
+
+
+A
+It checks if the response body is in JSON format.
+
+B
+It sends a JSON request to the server.
+
+C
+It sets the response headers to indicate a JSON response.
+
+-->D
+It converts the response body to a JSON object.
+
+correct-green-icon
+Your answer is correct!

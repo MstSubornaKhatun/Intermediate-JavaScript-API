@@ -67,3 +67,551 @@
 - API → software systems এর মধ্যে data exchange এর মাধ্যম।
 
 
+===============================
+33-2 Intro to JSON, JSON Structure, Parse, Stringify
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- JSON কী?
+- JSON এর structure কেমন?
+- JSON.stringify() কী করে?
+- JSON.parse() কী করে?
+- Object vs JSON string এর পার্থক্য কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. What is JSON?
+- JSON → JavaScript Object Notation।
+- Lightweight data format → data store এবং transfer করার জন্য ব্যবহৃত হয়।
+- Human-readable এবং machine-readable।
+- Key-value pair আকারে লেখা হয়।
+- অনেক programming language JSON support করে।
+
+2. JSON Structure
+const person = {
+    name: "hena",
+    age: 10,
+    friends: ["ratul", "manik", "korim"],
+    status: true,
+};
+
+👉 এখানে person একটি JavaScript object।  
+👉 JSON এ একই structure থাকে → key-value pair, array, boolean।
+
+3. JSON.stringify()
+- Object কে JSON string এ convert করে।
+const newPerson = JSON.stringify(person);
+console.log(newPerson);
+// {"name":"hena","age":10,"friends":["ratul","manik","korim"],"status":true}
+
+console.log(typeof person);   // object
+console.log(typeof newPerson); // string
+
+👉 stringify → object → string এ convert করে।
+
+4. JSON.parse()
+- JSON string কে আবার JavaScript object এ convert করে।
+const newPerson2 = JSON.parse(newPerson);
+console.log(newPerson2);
+// {name: "hena", age: 10, friends: Array(3), status: true}
+
+👉 parse → string → object এ convert করে।
+
+5. Key Points
+- Object → JavaScript data structure।
+- JSON string → data transfer এর জন্য ব্যবহার হয় (API, server communication)।
+- stringify() → object → string।
+- parse() → string → object।
+
+📌 Summary
+- JSON → data store/transfer এর জন্য lightweight format।
+- Structure → key-value pair, array, boolean।
+- JSON.stringify() → object কে string এ convert করে।
+- JSON.parse() → string কে object এ convert করে।
+- Object vs JSON string → object হলো data structure, JSON string হলো text format।
+
+
+===============================
+33-3 JSON Placeholder, GET Data, Display Data on UI
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- JSON Placeholder কী?
+- কীভাবে fake API থেকে data নেওয়া যায়?
+- fetch() কীভাবে কাজ করে?
+- Data UI তে দেখানোর ধাপ কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. What is JSON Placeholder?
+- JSON Placeholder হলো একটি free fake REST API।
+- Testing এবং practice করার জন্য ব্যবহার হয়।
+- Example endpoint: https://jsonplaceholder.typicode.com/todos/1
+
+👉 Output:
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+
+2. Fetch Data from API
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => console.log(json));
+
+👉 Output:
+{ userId: 1, id: 1, title: "delectus aut autem", completed: false }
+
+3. Handle Data with Function
+const handleLoadData = () => {
+  fetch('https://jsonplaceholder.typicode.com/todos/1')
+    .then(response => response.json())
+    .then(json => console.log(json));
+};
+
+👉 এখানে handleLoadData function কে button click event এ call করলে data console এ দেখা যাবে।
+
+4. Key Points
+- fetch() → API call করার জন্য ব্যবহার হয়।
+- response.json() → response কে JSON object এ convert করে।
+- then() → asynchronous কাজ শেষ হলে callback function execute করে।
+- JSON Placeholder → practice করার জন্য dummy data দেয়।
+
+5. Display Data on UI (Steps)
+- fetch() দিয়ে API থেকে data আনো।
+- response.json() দিয়ে data কে object এ convert করো।
+- console.log() দিয়ে test করো।
+- তারপর DOM element এ data insert করে UI তে দেখাও।
+
+📌 Summary
+- JSON Placeholder → free fake API।
+- fetch() → API থেকে data আনার জন্য।
+- response.json() → JSON string কে object এ convert করে।
+- then() → asynchronous কাজ handle করে।
+- Data UI তে দেখানোর জন্য DOM এ insert করতে হয়।
+
+
+===============================
+33-4 Load More Data, More APIs, Send Data to Function
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- কীভাবে একাধিক data API থেকে আনা যায়?
+- fetch() দিয়ে data load করার ধাপ কী?
+- Function এর মাধ্যমে data অন্য function এ পাঠানো যায় কীভাবে?
+- displayUser() function এর কাজ কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Load Data from API
+const handleLoadData = () => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        });
+};
+
+👉 Output: (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]  
+👉 এখানে API থেকে 10 জন user এর data পাওয়া যায়।
+
+2. Send Data to Another Function
+const handleLoadUser = () => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            displayUser(data); // data অন্য function এ পাঠানো হচ্ছে
+        });
+};
+
+👉 এখানে handleLoadUser function data fetch করে → তারপর displayUser() এ পাঠায়।
+
+3. Display Data Function
+const displayUser = (users) => {
+    console.log(users[0]);
+};
+
+👉 এখানে displayUser() function users array এর প্রথম user কে console এ দেখায়।  
+👉 পরবর্তীতে UI তে data দেখানোর জন্য DOM element এ insert করা যাবে।
+
+4. Key Points
+- fetch() → API থেকে data আনার জন্য ব্যবহার হয়।
+- response.json() → response কে JSON object এ convert করে।
+- then() → asynchronous কাজ শেষ হলে callback function execute করে।
+- Function → data অন্য function এ পাঠানো যায়।
+- displayUser() → data কে UI তে দেখানোর জন্য ব্যবহার করা যায়।
+
+📌 Summary
+- API থেকে data আনার জন্য fetch() ব্যবহার হয়।
+- response.json() → data কে object এ convert করে।
+- then() → asynchronous কাজ handle করে।
+- handleLoadUser() → data fetch করে এবং অন্য function এ পাঠায়।
+- displayUser() → data কে console বা UI তে দেখায়।
+
+
+===============================
+33-5 Dynamically Display Loaded Data on Your Website
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- কীভাবে API থেকে data নিয়ে UI তে দেখানো যায়?
+- fetch() দিয়ে data load করার ধাপ কী?
+- DOM এ dynamically element তৈরি করে data দেখানো যায় কীভাবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Load Data from API
+const handleLoadUser = () => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+        .then(res => res.json())
+        .then(data => showUser(data)); 
+};
+
+👉 এখানে fetch() দিয়ে API call করা হয়েছে।  
+👉 response.json() → response কে JSON object এ convert করেছে।  
+👉 তারপর showUser() function এ data পাঠানো হয়েছে।
+
+2. Display Data Dynamically
+const showUser = (users) => {
+    for (const user of users) {
+        const userContainer = document.getElementById("users");
+
+        const li = document.createElement("li");
+        li.innerText = user.name;
+        userContainer.appendChild(li);
+    }
+};
+
+👉 এখানে for...of loop দিয়ে users array এর প্রতিটি user কে নেওয়া হয়েছে।  
+👉 document.getElementById("users") → HTML element select করা হয়েছে।  
+👉 createElement("li") → নতুন list item তৈরি করা হয়েছে।  
+👉 innerText → user এর নাম বসানো হয়েছে।  
+👉 appendChild(li) → li কে container এ যোগ করা হয়েছে।
+
+3. Key Points
+- fetch() → API থেকে data আনার জন্য ব্যবহার হয়।
+- response.json() → response কে object এ convert করে।
+- then() → asynchronous কাজ শেষ হলে callback function execute করে।
+- DOM manipulation → createElement(), innerText, appendChild() দিয়ে UI তে data দেখানো যায়।
+- for loop বা for...of loop → array এর data iterate করার জন্য ব্যবহার হয়।
+
+📌 Summary
+- API থেকে data আনার জন্য fetch() ব্যবহার হয়।
+- showUser() function data কে UI তে dynamically দেখায়।
+- DOM এ নতুন element তৈরি করে data append করা যায়।
+- for...of loop দিয়ে array এর প্রতিটি item UI তে দেখানো যায়।
+
+
+===============================
+33-6 Load Posts and Display on the Website with CSS
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- কীভাবে API থেকে একাধিক post load করা যায়?
+- fetch() দিয়ে data আনার ধাপ কী?
+- DOM এ dynamically post দেখানো যায় কীভাবে?
+- CSS class ব্যবহার করে UI সুন্দর করা যায় কীভাবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Load Posts from API
+const handlePost = () => {
+   fetch("https://jsonplaceholder.typicode.com/posts")
+      .then(res => res.json())
+      .then(data => {
+          console.log(data);
+          displayPost(data);
+      });
+};
+
+👉 এখানে fetch() দিয়ে API call করা হয়েছে।  
+👉 response.json() → response কে JSON object এ convert করেছে।  
+👉 তারপর displayPost() function এ data পাঠানো হয়েছে।
+
+2. Display Posts Dynamically
+const displayPost = (posts) => {
+    const postContainer = document.getElementById("postContainer");
+
+    for (const post of posts) {
+        const div = document.createElement("div");
+        div.classList.add("card"); // CSS class যোগ করা হয়েছে
+
+        div.innerHTML = `
+            <h1>${post.title}</h1>
+            <p>${post.body}</p>
+            <button>Details</button>
+        `;
+        postContainer.appendChild(div);
+    }
+};
+
+👉 এখানে for...of loop দিয়ে posts array এর প্রতিটি post নেওয়া হয়েছে।  
+👉 createElement("div") → নতুন div তৈরি করা হয়েছে।  
+👉 classList.add("card") → CSS class যোগ করা হয়েছে styling এর জন্য।  
+👉 innerHTML → post এর title এবং body বসানো হয়েছে।  
+👉 appendChild(div) → div কে container এ যোগ করা হয়েছে।
+
+3. CSS Styling (Example)
+.card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+.card h1 {
+    font-size: 20px;
+    color: #333;
+}
+.card p {
+    font-size: 16px;
+    color: #555;
+}
+.card button {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+👉 CSS দিয়ে card সুন্দরভাবে সাজানো যায়।  
+👉 প্রতিটি post আলাদা card আকারে দেখানো হবে।
+
+4. Key Points
+- fetch() → API থেকে data আনার জন্য ব্যবহার হয়।
+- response.json() → response কে object এ convert করে।
+- DOM manipulation → createElement(), innerHTML, appendChild() দিয়ে UI তে data দেখানো যায়।
+- CSS class → card কে সুন্দরভাবে সাজানোর জন্য ব্যবহার হয়।
+
+📌 Summary
+- API থেকে post আনার জন্য fetch() ব্যবহার হয়।
+- displayPost() function data কে UI তে dynamically দেখায়।
+- DOM এ নতুন div তৈরি করে post append করা হয়।
+- CSS class দিয়ে card আকারে সুন্দরভাবে সাজানো যায়।
+
+
+===============================
+33-7 GET, POST, PATCH, DELETE, CRUD, GET vs POST
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- CRUD কী?
+- REST API methods কীভাবে কাজ করে?
+- GET vs POST এর পার্থক্য কী?
+- PUT vs PATCH এর পার্থক্য কী?
+- HTTP status codes কী বোঝায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. CRUD Operations
+- C → Create → নতুন data তৈরি করা।
+- R → Read → data পড়া বা দেখা।
+- U → Update → data পরিবর্তন করা।
+- D → Delete → data মুছে ফেলা।
+
+👉 REST API methods CRUD এর সাথে সম্পর্কিত:
+- GET → Read
+- POST → Create
+- PUT/PATCH → Update
+- DELETE → Delete
+
+2. REST API Methods (JSONPlaceholder Example)
+- GET → data পড়ার জন্য।
+fetch("https://jsonplaceholder.typicode.com/posts")
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+- POST → নতুন data তৈরি করার জন্য।
+fetch("https://jsonplaceholder.typicode.com/posts", {
+  method: "POST",
+  body: JSON.stringify({
+    title: "New Post",
+    body: "This is a test post",
+    userId: 1
+  }),
+  headers: { "Content-type": "application/json; charset=UTF-8" }
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+- PUT → পুরো object update করার জন্য।
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
+  method: "PUT",
+  body: JSON.stringify({
+    id: 1,
+    title: "Updated Post",
+    body: "This post is fully updated",
+    userId: 1
+  }),
+  headers: { "Content-type": "application/json; charset=UTF-8" }
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+- PATCH → আংশিক update করার জন্য।
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
+  method: "PATCH",
+  body: JSON.stringify({
+    title: "Partially Updated Title"
+  }),
+  headers: { "Content-type": "application/json; charset=UTF-8" }
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+- DELETE → data মুছে ফেলার জন্য।
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
+  method: "DELETE"
+})
+  .then(res => console.log("Deleted:", res.status));
+
+3. PUT vs PATCH
+- PUT → পুরো object replace করে।
+- PATCH → object এর নির্দিষ্ট অংশ update করে।
+👉 Example:
+PUT → {id:1, title:"New", body:"New Body"} → পুরনো সব replace হবে।
+PATCH → {title:"New"} → শুধু title পরিবর্তন হবে।
+
+4. POST vs PUT vs PATCH
+- POST → নতুন resource তৈরি করে।
+- PUT → পুরনো resource পুরোপুরি replace করে।
+- PATCH → পুরনো resource আংশিকভাবে update করে।
+
+5. GET vs POST
+- GET → server থেকে data আনার জন্য।
+- POST → server এ নতুন data পাঠানোর জন্য।
+👉 GET → শুধু পড়া (read-only)।
+👉 POST → create বা নতুন data যোগ করা।
+
+6. HTTP Status Codes (Common)
+- 200 → OK (success)
+- 201 → Created (নতুন resource তৈরি হয়েছে)
+- 400 → Bad Request (ভুল request)
+- 401 → Unauthorized (permission নেই)
+- 404 → Not Found (resource পাওয়া যায়নি)
+- 500 → Internal Server Error (server সমস্যা)
+
+📌 Summary
+- CRUD → Create, Read, Update, Delete → REST API methods এর সাথে সম্পর্কিত।
+- GET → data পড়া, POST → নতুন data তৈরি।
+- PUT → পুরো object replace, PATCH → আংশিক update।
+- DELETE → data remove।
+- HTTP status codes → request এর ফলাফল বোঝায়।
+
+===============================
+33-8 Debug API, Network Tab, Status Code, Headers, Bad API
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- API debug কীভাবে করবো?
+- Network tab এ কী দেখা যায়?
+- HTTP status code কী বোঝায়?
+- Headers কী?
+- Bad API বলতে কী বোঝায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Debugging API
+- API debug করার সময় browser এর **Developer Tools → Network Tab** ব্যবহার করা হয়।
+- এখানে request এবং response details দেখা যায়।
+- Debugging এর সময় focus করতে হবে:
+  - Request URL
+  - Method (GET, POST, PUT/PATCH, DELETE)
+  - Status code
+  - Response body
+  - Headers
+
+2. Network Tab (Browser DevTools)
+- Request এর সব তথ্য দেখা যায়:
+  - Request URL
+  - Method (GET/POST ইত্যাদি)
+  - Status code (200, 404, 500 ইত্যাদি)
+  - Response time
+  - Response data (JSON, HTML, text)
+  - Headers (request headers, response headers)
+
+👉 Network tab API debugging এর জন্য সবচেয়ে গুরুত্বপূর্ণ tool।
+
+3. HTTP Status Codes (Common)
+- 200 → OK (success)
+- 201 → Created (নতুন resource তৈরি হয়েছে)
+- 400 → Bad Request (ভুল request)
+- 401 → Unauthorized (permission নেই)
+- 403 → Forbidden (access denied)
+- 404 → Not Found (resource পাওয়া যায়নি)
+- 500 → Internal Server Error (server সমস্যা)
+
+👉 Status code দেখে বোঝা যায় API কাজ করছে কিনা।
+
+4. Headers
+- Headers → request এবং response এর সাথে অতিরিক্ত তথ্য।
+- Request headers → client থেকে server এ যায় (যেমন Content-Type, Authorization)।
+- Response headers → server থেকে client এ যায় (যেমন Content-Type, Cache-Control)।
+- Example:
+  - Content-Type: application/json
+  - Authorization: Bearer token
+
+👉 Headers API communication এর rules এবং metadata define করে।
+
+5. Bad API
+- Bad API বলতে বোঝায়:
+  - ভুল endpoint (যেমন টাইপো বা ভুল URL)
+  - ভুল method ব্যবহার করা (GET এর জায়গায় POST)
+  - Missing headers (যেমন Authorization না দেওয়া)
+  - Server error (500)
+  - Invalid data format (JSON ভুলভাবে পাঠানো)
+
+👉 Bad API debug করার সময় Network tab এ request/response details দেখে সমস্যা খুঁজে বের করতে হয়।
+
+📌 Summary
+- Debugging API → Network tab এ request/response details দেখা।
+- Status code → API কাজ করছে কিনা বোঝায়।
+- Headers → request/response এর metadata।
+- Bad API → ভুল endpoint, method, headers বা server error।
+- Network tab → API debugging এর জন্য সবচেয়ে কার্যকর tool।
+
+
+1) What is an API?
+API (Application Programming Interface) হলো একটি ইন্টারফেস যা দুটি সফটওয়্যার সিস্টেমকে একে অপরের সাথে যোগাযোগ করতে দেয়।
+
+2) What are the HTTP methods supported by REST?
+GET, POST, PUT, DELETE, PATCH
+
+3) Can you use GET request instead of PUT to create a resource?
+না। GET শুধু ডেটা রিট্রিভ করার জন্য ব্যবহৃত হয়। নতুন রিসোর্স তৈরি করতে POST বা আপডেট করতে PUT ব্যবহার করতে হয়।
+
+4) What is the difference between PUT and POST?
+POST → নতুন রিসোর্স তৈরি করে।
+PUT → বিদ্যমান রিসোর্স আপডেট বা রিপ্লেস করে।
+
+5) What is JSON?
+JSON (JavaScript Object Notation) হলো একটি lightweight data format যা key-value pair আকারে ডেটা সংরক্ষণ করে।
+
+6) What are CRUD operations?
+C → Create
+R → Read
+U → Update
+D → Delete
+
+7) What is the file extension of JSON?
+.json
+
+8) What are the data types supported by JSON?
+String, Number, Boolean, Null, Object, Array
+
+9) What is the role of JSON.stringify?
+JavaScript object বা array কে JSON string এ কনভার্ট করে।
+
+10) Show how to parse a JSON.
+const jsonString = '{"name":"Mst.","age":25}';
+const obj = JSON.parse(jsonString);
+console.log(obj.name); // Output: Mst.
+
+11) Tell us the difference between GET and POST
+GET → ডেটা সার্ভার থেকে রিট্রিভ করে, URL এ ডেটা পাঠায়, cache করা যায়।
+POST → সার্ভারে নতুন ডেটা পাঠায়, request body তে ডেটা পাঠায়, cache করা যায় না।
