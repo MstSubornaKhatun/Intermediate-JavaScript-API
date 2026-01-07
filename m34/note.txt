@@ -1,0 +1,284 @@
+===============================
+34-1 What Really is JavaScript?
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- JavaScript আসলে কী?
+- High Abstraction কীভাবে কাজ করে?
+- Garbage Collection কী?
+- JIT Compilation কী?
+- Multi-paradigm বলতে কী বোঝায়?
+- Prototype-based language কী?
+- Dynamically-typed language কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. High Abstraction
+- Abstraction → implementation details লুকিয়ে শুধু functionality দেখানো।
+- Example: ATM ব্যবহারকারী জানে না ভিতরে কী হচ্ছে, শুধু বোতাম চাপছে।
+- JavaScript এ abstraction → memory allocation, garbage collection ইত্যাদি developer কে handle করতে হয় না।
+- সুবিধা → developer মূল logic এ focus করতে পারে, code সহজে বোঝা ও maintain করা যায়।
+
+2. Garbage Collection
+- JavaScript automatically unused data collect করে।
+- Algorithm → "Mark-and-Sweep"।
+- Process:
+  - Garbage collector roots থেকে শুরু করে।
+  - References mark করে।
+  - সব reachable object mark করে।
+  - Unmarked object গুলো remove করে memory free করে।
+- Developer কে manually memory free করতে হয় না।
+
+3. JIT Compilation (Just-In-Time)
+- JavaScript purely interpreted নয়।
+- Modern JavaScript engines JIT compiled।
+- JIT compiler → code কে machine code এ convert করে এবং সাথে সাথে execute করে।
+- Components:
+  - Memory Heap
+  - Interpreter
+  - Profiler
+  - Compiler → optimized code তৈরি করে।
+
+4. Multi-Paradigm Language
+- JavaScript multi-paradigm → বিভিন্ন programming style support করে।
+- Procedural Programming → step-by-step instructions।
+- Object-Oriented Programming → objects এর মাধ্যমে data + methods।
+- Functional Programming → pure functions, maintainable software তৈরি।
+
+5. Prototype-Based Language
+- JavaScript এ function, array, object সবই object (primitive ছাড়া)।
+- Prototype → blueprint/template → নতুন object properties inherit করে।
+- Example:
+  let names = ["Rahim", "Karim", "Sarim"];
+  names.pop(); // Array prototype method ব্যবহার করা হচ্ছে।
+
+6. Dynamically-Typed Language
+- Variable declare করার সময় type specify করতে হয় না।
+- JavaScript engine runtime এ type নির্ধারণ করে।
+- Example:
+  let temp = "name"; // string
+  temp = true;       // boolean
+- Type runtime এ পরিবর্তন হতে পারে।
+
+📌 Summary
+- High Abstraction → details লুকিয়ে functionality দেখায়।
+- Garbage Collection → unused data automatically remove হয়।
+- JIT Compiled → modern JS engine code কে machine code এ convert করে।
+- Multi-Paradigm → procedural, OOP, functional সব style support করে।
+- Prototype-Based → object blueprint থেকে properties inherit করে।
+- Dynamically-Typed → variable এর type runtime এ নির্ধারণ হয়।
+
+
+===============================
+34-2 JavaScript Engine V8 Internal Mechanism
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- V8 Engine কীভাবে কাজ করে?
+- Parser, AST, Ignition, TurboFan এর ভূমিকা কী?
+- Bytecode এবং Optimized Machine Code কীভাবে তৈরি হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. What is V8 Engine?
+- V8 হলো Google এর high-performance JavaScript engine।
+- Chrome browser এবং Node.js এ ব্যবহৃত হয়।
+- Just-In-Time (JIT) compilation ব্যবহার করে JavaScript কে machine code এ convert করে।
+Sources: 
+
+2. Steps of V8 Engine Mechanism
+- **JavaScript Source Code** → Developer লিখে।
+- **Parser** → Source code কে পড়ে এবং **Abstract Syntax Tree (AST)** তৈরি করে।
+- **Interpreter (Ignition)** → AST কে bytecode এ translate করে এবং execute করে।
+- **Compiler (TurboFan)** → Bytecode কে optimized machine code এ compile করে।
+- **Optimizer Feedback** → Execution এর সময় performance data collect করে এবং optimization improve করে।
+Sources: 
+
+3. Components of V8
+- **Parser** → Code কে AST এ রূপান্তর করে।
+- **AST (Abstract Syntax Tree)** → Code এর structural representation।
+- **Ignition (Interpreter)** → প্রথমে bytecode তৈরি করে এবং execute করে।
+- **TurboFan (Compiler)** → Optimized machine code তৈরি করে।
+- **Memory Heap** → Objects store করার জায়গা।
+- **Garbage Collector** → Unused memory free করে।
+
+4. Execution Flow
+JavaScript Code  
+↓  
+Parsing → AST  
+↓  
+Ignition Interpreter → Bytecode  
+↓  
+TurboFan Compiler → Optimized Machine Code  
+↓  
+CPU executes fast native code
+
+5. Why V8 is Fast
+- JIT compilation → runtime এ machine code তৈরি হয়।
+- Optimizations → frequently executed code আরও efficient হয়।
+- Garbage collection → memory automatically free হয়।
+- Cross-platform → ARM, x86, MIPS architecture এ কাজ করে।
+
+📌 Summary
+- V8 Engine → Chrome এবং Node.js এর JavaScript engine।
+- Parser → AST তৈরি করে।
+- Ignition → bytecode তৈরি করে।
+- TurboFan → optimized machine code তৈরি করে।
+- JIT compilation → JavaScript কে দ্রুত machine code এ execute করে।
+- Garbage collection → memory automatically free হয়।
+
+
+===============================
+34-3 JavaScript Execution Context and Call Stack
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Execution Context কী?
+- Global Execution Context (GEC) কী?
+- Function Execution Context (FEC) কী?
+- Creation Phase এবং Execution Phase কীভাবে কাজ করে?
+- Call Stack কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Execution Context
+- Execution Context হলো একটি environment যেখানে JavaScript code execute হয়।
+- Variables, parameters এবং function সম্পর্কিত তথ্য এখানে store হয়।
+- দুই ধরনের Execution Context আছে:
+  1. Global Execution Context (GEC)
+  2. Function Execution Context (FEC)
+
+2. Global Execution Context (GEC)
+- যখন JavaScript engine একটি script file পায়, তখন প্রথমে একটি default execution context তৈরি করে → এটিই GEC।
+- GEC হলো base/default context।
+- Function এর বাইরে থাকা সব code GEC এ execute হয়।
+- প্রতিটি script file এ শুধুমাত্র একটি GEC থাকে।
+- Browser এ GEC এর global object হলো `window` এবং `this` keyword `window` কে নির্দেশ করে।
+
+3. Function Execution Context (FEC)
+- যখনই একটি function call হয়, তখন একটি নতুন execution context তৈরি হয়।
+- প্রতিটি function এর নিজস্ব execution context থাকে।
+- একাধিক function call হলে একাধিক FEC তৈরি হয়।
+- Function call শেষ হলে সেই FEC destroy হয়ে যায়।
+
+4. Creation Phase
+- Function call হওয়ার পর execution শুরু হওয়ার আগে creation phase হয়।
+- JS engine function code scan করে এবং compile করে।
+- Variables এবং functions memory তে allocate হয় কিন্তু values assign হয় না।
+- Example (Browser এ):
+  - Global Object: window
+  - this: window
+  - Variables: undefined
+  - Functions: reference stored
+
+5. Execution Phase
+- Execution phase এ code line by line execute হয়।
+- Variables এ values assign হয়।
+- Function calls execute হয়।
+- Example:
+  const a = 10;
+  const b = 20;
+  first(); // function call
+
+6. Call Stack
+- Call Stack হলো একটি data structure যেখানে execution contexts stack আকারে রাখা হয়।
+- GEC সবসময় নিচে থাকে।
+- Function call হলে নতুন FEC stack এ push হয়।
+- Function শেষ হলে সেই FEC stack থেকে pop হয়।
+- Execution শেষ হলে শুধুমাত্র GEC থাকে।
+
+👉 Example Flow:
+- Start → GEC তৈরি হয়।
+- first() call → FEC তৈরি হয় → stack এ push হয়।
+- first() → second() call → নতুন FEC তৈরি হয়।
+- second() → third() call → নতুন FEC তৈরি হয়।
+- third() শেষ হলে → stack থেকে pop হয়।
+- second() শেষ হলে → stack থেকে pop হয়।
+- first() শেষ হলে → stack থেকে pop হয়।
+- শেষে শুধু GEC থাকে।
+
+📌 Summary
+- Execution Context → environment যেখানে JS code execute হয়।
+- GEC → default context, সব function এর বাইরে থাকা code এখানে execute হয়।
+- FEC → প্রতিটি function call এর জন্য নতুন context তৈরি হয়।
+- Creation Phase → variables/functions allocate হয় কিন্তু values assign হয় না।
+- Execution Phase → code line by line execute হয়।
+- Call Stack → execution contexts stack আকারে manage হয়।
+
+===============================
+34-3-1 Learn Event Loop in Animated Way
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Event Loop কী?
+- Synchronous vs Asynchronous task এর পার্থক্য কী?
+- Call Stack কীভাবে কাজ করে?
+- Callback Queue কী?
+- Event Loop এর ভূমিকা কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Synchronous Task
+- যেসব কাজ ইনস্ট্যান্ট হয়ে যায় → এগুলো synchronous task।
+- Example: console.log("Tea Ready!");
+- সবসময় synchronous task আগে execute হয়।
+
+2. Asynchronous Task
+- যেসব কাজ করতে সময় লাগে → এগুলো asynchronous task।
+- Example: setTimeout(() => console.log("Fuchka Ready!"), 2000);
+- Asynchronous task গুলো callback queue তে যায় এবং পরে execute হয়।
+
+3. Call Stack
+- Call Stack হলো execution এর লাইন।
+- একবারে একটি কাজ execute হয়।
+- Function call হলে stack এ push হয়।
+- Function শেষ হলে stack থেকে pop হয়।
+👉 Example analogy: মামার সহকারী একবারে একজনের অর্ডার নিচ্ছেন।
+
+4. Callback Queue
+- যেসব কাজ ready নয় → callback queue তে বসে থাকে।
+- কাজ ready হলে callback queue থেকে call stack এ যায়।
+👉 Example analogy: ফুচকা রেডি হতে সময় লাগে, তাই গ্রাহক সিটিং জোনে বসে থাকে।
+
+5. Event Loop
+- Event Loop হলো manager → সে call stack এবং callback queue এর মধ্যে কাজ করে।
+- Call stack ফাঁকা হলে callback queue থেকে কাজ নিয়ে আসে।
+- Asynchronous কাজ ready হলে event loop তাকে call stack এ পাঠায়।
+👉 Example analogy: মামার সহকারী গ্রাহককে ডাকছেন → অর্ডার শেষ হলে লাইন থেকে সরিয়ে দিচ্ছেন।
+
+6. Example Code
+console.log("Tea Ready!"); // synchronous
+
+function person2() {
+    console.log("Chalmuri Ready!"); // synchronous
+}
+
+function person3() {
+    setTimeout(() => {
+        console.log("Fuchka Ready!"); // asynchronous
+    }, 2000);
+}
+
+function person4() {
+    console.log("Thelmuri Ready!"); // synchronous
+}
+
+person2();
+person3();
+person4();
+
+👉 Output sequence:
+Tea Ready!  
+Chalmuri Ready!  
+Thelmuri Ready!  
+Fuchka Ready! (after delay)
+
+📌 Summary
+- Synchronous → ইনস্ট্যান্ট কাজ, আগে execute হয়।
+- Asynchronous → সময় লাগে, callback queue তে যায়।
+- Call Stack → একবারে একটি কাজ execute হয়।
+- Callback Queue → pending asynchronous কাজের waiting zone।
+- Event Loop → call stack ফাঁকা হলে callback queue থেকে কাজ নিয়ে আসে।
+
+
+
