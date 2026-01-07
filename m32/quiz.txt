@@ -1,0 +1,215 @@
+Question 01
+
+Which value is Falsy?
+
+
+A
+‘null’
+
+-->B
+undefined
+
+correct-green-icon
+C
+‘0’
+
+D
+‘false’
+
+Your answer is correct!
+
+Question 02
+
+What is "closure"? (Google: what is closure in javascript)
+
+
+A
+Access to an outer function’s scope from an inner function
+
+B
+Closing brackets of a function
+
+C
+function bundled together (enclosed) with references to its surrounding state
+
+-->D
+a and c
+
+correct-green-icon
+Your answer is correct!
+
+Question 03
+
+What would be the output?
+
+let p='Javascript'; 
+let q=p; 
+p='React'; 
+console.log(q);
+
+A
+"React"
+
+-->B
+"Javascript"
+
+correct-green-icon
+C
+undefined
+
+Your answer is correct!
+
+Question 04
+
+What will be the output (be careful. And think about it. Don't execute the code before answering.)? 
+
+const isTrue=true;
+console.log(!isTrue ? "hello" : "world")
+
+A
+hello
+
+correct-green-icon
+B
+Hello world
+
+C
+undefined
+
+-->D
+world
+
+Your answer is wrong!
+Correct answer: (D)
+
+Question 05
+
+Which one will check whether the value and the type are the same for strict equality comparison?
+
+
+A
+!=
+
+B
+==
+
+-->C
+===
+
+correct-green-icon
+D
+!==
+
+Your answer is correct!
+
+Question 06
+
+What will be the value of the result variable? 
+
+const sum =(p, q)=> {
+ p + q;
+}
+const result = sum(2, 3);
+console.log(result);
+
+A
+null
+
+B
+NaN
+
+C
+5
+
+-->D
+undefined
+
+correct-green-icon
+Your answer is correct!
+
+Question 07
+
+When will you get undefined?
+
+
+A
+When you don't set a value for variable and then try to access it.
+
+B
+When you don't return anything from the function
+
+C
+When you are trying to access a property that doesn't exist in an object
+
+-->D
+All of the above
+
+correct-green-icon
+Your answer is correct!
+
+Question 08
+
+What would be the output from the code below?
+
+if ("2" === 2) {
+ console.log("Inside if");
+} else {
+ console.log("Inside else");
+}
+
+A
+"Inside if"
+
+-->B
+"Inside else"
+
+correct-green-icon
+C
+No output
+
+D
+2
+
+Your answer is correct!
+
+Question 09
+
+What would be the output from the function below? 
+
+function work(x, y = 4) {
+ return x + y;
+}
+console.log(work(32);
+
+A
+32
+
+B
+36
+
+correct-green-icon
+-->C
+Syntax error
+
+D
+Reference error
+
+Your answer is wrong!
+Correct answer: (C)
+
+Question 10
+
+Can you access the let variable outside of the block scope?
+
+
+A
+Yes
+
+-->B
+No
+
+correct-green-icon
+C
+Sometimes
+
+Your answer is correct!
