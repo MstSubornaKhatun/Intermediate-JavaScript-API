@@ -365,3 +365,308 @@ result2(); // 2
 
 
 
+===============================
+32-6 (Optional) Callback Function & Passing Different Functions
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Callback function কী?
+- Function কে argument হিসেবে pass করা যায় কীভাবে?
+- কেন callback দরকার হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Callback Function Definition
+- Callback function হলো এমন একটি function যেটি অন্য একটি function এর argument হিসেবে pass করা হয়।
+- মূল function সেই callback কে call করে কাজ সম্পন্ন করে।
+- JavaScript এ asynchronous কাজ (যেমন API call, event handling) এর জন্য callback খুব গুরুত্বপূর্ণ।
+
+2. Simple Example
+function ghotok(patri, name) {
+    patri(name);
+}
+
+const patri1 = function(name) {
+    console.log("okay ami patri", name);
+};
+
+const patri2 = function(name) {
+    console.log("okay ami patri", name);
+};
+
+const patri3 = function(name) {
+    console.log("okay ami patri", name);
+};
+
+ghotok(patri1, "halima"); // okay ami patri halima
+ghotok(patri2, "hania");  // okay ami patri hania
+ghotok(patri3, "jorina"); // okay ami patri jorina
+
+3. Key Points
+- Function কে variable এর মতো ব্যবহার করা যায়।
+- Function কে অন্য function এ argument হিসেবে pass করা যায়।
+- Callback function মূলত অন্য function এর ভিতরে call হয়।
+- Different callback দিলে output আলাদা হয়।
+
+4. Practical Use Cases
+- Event handling → button click হলে callback function execute হয়।
+- Asynchronous কাজ → API থেকে data আসলে callback function দিয়ে handle করা হয়।
+- Array methods → map, filter, forEach এ callback function ব্যবহার হয়।
+
+📌 Summary
+- Callback function → অন্য function এ argument হিসেবে pass করা হয়।
+- ghotok() → patri নামের callback function কে call করে।
+- Different callback দিলে different কাজ হয়।
+- Callback asynchronous programming এ খুব গুরুত্বপূর্ণ।
+
+
+===============================
+32-7 (Advanced) Function Arguments: Pass by Value vs Pass by Reference
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Pass by value কী?
+- Pass by reference কী?
+- Primitive vs Non-primitive data type function এ কীভাবে behave করে?
+- arguments object কীভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Function Arguments & `arguments` Object
+function sum(a, b, c) {
+    const newArg = [...arguments];
+    console.log(newArg);
+}
+console.log(sum.length);  // 3 (parameters count)
+console.log(typeof sum);  // function
+sum(10, 20, 30, 45, 64, 44, 53, 35, 23);
+// Output: [10, 20, 30, 45, 64, 44, 53, 35, 23]
+
+⚠️ Note:
+- `arguments` object → function এ pass করা সব arguments কে ধরে।
+- `arguments.push()` করা যায় না, কারণ এটি array নয় (array-like object)।
+
+2. Pass by Value (Primitive Types)
+let name = "masud";
+function test(text) {
+    test = "karim";
+}
+test(name);
+console.log(name); // masud (primitive → pass by value)
+
+let a = 10;
+let b = 20;
+function sums(num1, num2) {
+    num1 = 50;
+}
+sums(a, b);
+console.log(a); // 10 (primitive → original value পরিবর্তন হয়নি)
+
+👉 Primitive types (string, number, boolean, null, undefined, symbol, bigint) সবসময় pass by value হয়।
+
+3. Pass by Reference (Non-Primitive Types)
+const person = { name: "rakib", age: 35 };
+function sum2(obj) {
+    obj.name = "ratul";
+}
+sum2(person);
+console.log(person); // { name: "ratul", age: 35 }
+
+👉 Non-primitive types (object, array, function) সবসময় pass by reference হয়।  
+👉 Function এ modify করলে original object পরিবর্তন হয়।
+
+4. Key Differences
+- Pass by Value → copy যায়, original পরিবর্তন হয় না।
+- Pass by Reference → reference যায়, original পরিবর্তন হয়।
+
+📌 Summary
+- Primitive data type → pass by value → copy যায় → original অপরিবর্তিত থাকে।
+- Non-primitive data type → pass by reference → reference যায় → original পরিবর্তিত হয়।
+- `arguments` object → function এ pass করা সব arguments ধরে, কিন্তু এটি array নয়।
+
+
+===============================
+32-7-1 Pass by Value vs Pass by Reference
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Pass by value কী?
+- Pass by reference কী?
+- Primitive vs Non-primitive data type function এ কীভাবে behave করে?
+- কখন কোনটা ব্যবহার করবো?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Example: Pass by Value
+function changeNumber(num) {
+    num = num + 10;
+    console.log("function er vitore", num); // 20
+}
+const myNumber = 10;
+changeNumber(myNumber);
+console.log("function er baire", myNumber); // 10
+
+👉 এখানে `myNumber` primitive type (number)। Function এ copy গেছে, তাই বাইরে আসল মান পরিবর্তন হয়নি।
+
+2. Characteristics: Pass by Value
+- Function আসল data এর একটি copy পায়।
+- Function এর ভিতরে পরিবর্তন করলে আসল data তে প্রতিফলিত হয় না।
+- JavaScript primitive data type (number, string, boolean, null, undefined, symbol, bigint) → pass by value।
+
+3. Example: Pass by Reference
+const person = { name: "rakib", age: 35 };
+function changePerson(obj) {
+    obj.name = "ratul";
+}
+changePerson(person);
+console.log(person); // { name: "ratul", age: 35 }
+
+👉 এখানে `person` object। Function এ reference গেছে, তাই আসল object পরিবর্তিত হয়েছে।
+
+4. Characteristics: Pass by Reference
+- Function আসল data এর reference পায়।
+- Function এর ভিতরে পরিবর্তন করলে আসল data তে প্রতিফলিত হয়।
+- JavaScript object, array, function → pass by reference।
+
+5. কখন কোনটা ব্যবহার করবো
+- Pass by Value → যখন নিশ্চিত করতে চান যে function এর কাজ আসল data পরিবর্তন করবে না।
+- Pass by Reference → যখন function এর কাজ আসল object এ প্রতিফলিত করতে চান।
+
+6. Practical Note
+- JavaScript এ primitive data type বেশি ব্যবহৃত হয় → তাই pass by value বেশি দেখা যায়।
+- Object/array এর সাথে কাজ করার সময় pass by reference জানা জরুরি।
+
+📌 Summary
+- Primitive → pass by value → copy যায় → আসল data অপরিবর্তিত।
+- Non-primitive → pass by reference → reference যায় → আসল data পরিবর্তিত।
+- Pass by value → নিরাপদ, আসল data পরিবর্তন হয় না।
+- Pass by reference → powerful, আসল object পরিবর্তন হয়।
+
+
+===============================
+32-8 Pre Increment, Post Increment, Pre Decrement, Post Decrement
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Pre increment/post increment কী?
+- Pre decrement/post decrement কী?
+- এদের মধ্যে পার্থক্য কীভাবে বোঝা যায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Increment (মান বাড়ানো)
+let age = 10;
+
+// age = age + 1;
+// age += 1;
+// age++;
+
+console.log(age++); // 10 → Post Increment (আগে মান দেখায়, পরে বাড়ায়)
+console.log(++age); // 11 → Pre Increment (আগে বাড়ায়, পরে মান দেখায়)
+
+👉 Post Increment (x++) → প্রথমে পুরনো মান return করে, তারপর মান ১ বাড়ায়।
+👉 Pre Increment (++x) → প্রথমে মান ১ বাড়ায়, তারপর নতুন মান return করে।
+
+2. Decrement (মান কমানো)
+let age2 = 10;
+
+// age2 = age2 - 1;
+// age2 -= 1;
+// age2--;
+
+console.log(age2--); // 10 → Post Decrement (আগে মান দেখায়, পরে কমায়)
+console.log(--age2); // 9  → Pre Decrement (আগে কমায়, পরে মান দেখায়)
+
+👉 Post Decrement (x--) → প্রথমে পুরনো মান return করে, তারপর মান ১ কমায়।
+👉 Pre Decrement (--x) → প্রথমে মান ১ কমায়, তারপর নতুন মান return করে।
+
+3. Key Differences
+- Pre Increment (++x) → আগে বাড়ায়, পরে মান দেখায়।
+- Post Increment (x++) → আগে মান দেখায়, পরে বাড়ায়।
+- Pre Decrement (--x) → আগে কমায়, পরে মান দেখায়।
+- Post Decrement (x--) → আগে মান দেখায়, পরে কমায়।
+
+📌 Summary
+- Increment → মান ১ বাড়ানো।
+- Decrement → মান ১ কমানো।
+- Pre → আগে পরিবর্তন হয়, পরে মান return হয়।
+- Post → আগে মান return হয়, পরে পরিবর্তন হয়।
+
+32-9 Module summary and interview questions
+
+Interview Questions & Answers (JavaScript)
+
+1. প্রশ্ন: জাভাস্ক্রিপ্ট কী কী ডাটা টাইপের ভেরিয়েবল আছে?
+   উত্তর: 
+   Primitive Types → string, number, bigint, boolean, undefined, symbol, null
+   Non-Primitive Types → object (array, function, date ইত্যাদি)
+
+2. প্রশ্ন: জাভাস্ক্রিপ্ট ফাংশন, বা array কি টাইপের জিনিস?
+   উত্তর:
+   Function → object
+   Array → object (special form, index-based)
+
+3. প্রশ্ন: জাভাস্ক্রিপ্ট এ array যদি অবজেক্ট হয় তাহলে কিভাবে চেক করবে কোন একটা ভেরিয়েবল একটা array নাকি array না?
+   উত্তর:
+   Array.isArray(variable)   // সবচেয়ে নির্ভরযোগ্য
+   variable instanceof Array // কাজ করে, কিন্তু সবসময় নয়
+
+4. প্রশ্ন: undefined আর null এর মধ্যে ডিফারেন্স কি?
+   উত্তর:
+   undefined → declare করা হয়েছে কিন্তু value নেই
+   null → ইচ্ছা করে empty value দেওয়া হয়েছে
+
+5. প্রশ্ন: double equal (==) আর triple equal (===) এই দুইটার মধ্যে ডিফারেন্স কি?
+   উত্তর:
+   ==  → loose equality (type conversion করে compare করে)
+   === → strict equality (type ও value দুটোই match করতে হবে)
+
+6. প্রশ্ন: implicit conversion কি জিনিস? এটা কখন হয়?
+   উত্তর:
+   জাভাস্ক্রিপ্ট স্বয়ংক্রিয়ভাবে type পরিবর্তন করে।
+   উদাহরণ:
+   "5" + 2 → "52"
+   "5" - 2 → 3
+
+7. প্রশ্ন: জাভাস্ক্রিপ্ট এ কয়েক ধরনের স্কোপ আছে। এই স্কোপ গুলার মধ্যে ডিফারেন্স কি?
+   উত্তর:
+   Global Scope → পুরো প্রোগ্রামে accessible
+   Function Scope → ফাংশনের ভিতরে declare করা ভেরিয়েবল শুধু ওই ফাংশনে কাজ করে
+   Block Scope → {} ব্লকের ভিতরে declare করা ভেরিয়েবল শুধু ওই ব্লকে কাজ করে
+
+8. প্রশ্ন: ব্লক স্কোপ কি জিনিস? let, const কি টাইপের স্কোপ তৈরি করে?
+   উত্তর:
+   let, const → block scope তৈরি করে
+   var → function scope তৈরি করে
+
+9. প্রশ্ন: (এডভান্সড) Closure কি জিনিস? এইটা কিভাবে কাজ করে?
+   উত্তর:
+   Closure = function + lexical scope
+   Inner function outer function-এর ভেরিয়েবল access করতে পারে।
+   উদাহরণ:
+   function outer() {
+     let count = 0;
+     return function inner() {
+       count++;
+       return count;
+     }
+   }
+
+10. প্রশ্ন: Callback function কি জিনিস?
+    উত্তর:
+    অন্য ফাংশনের argument হিসেবে পাঠানো ফাংশন।
+    উদাহরণ:
+    setTimeout(() => { console.log("Hello"); }, 1000);
+
+11. প্রশ্ন: Hoisting কি জিনিস?
+    উত্তর:
+    ভেরিয়েবল ও ফাংশন declaration উপরে তুলে আনা হয়।
+    উদাহরণ:
+    console.log(a); // undefined
+    var a = 5;
+
+12. প্রশ্ন: (এডভান্সড) কি ধরণের ভেরিয়েবল reference দিয়ে ফাংশনে পাঠানো হয় আর কোন ধরণের ভেরিয়েবল value হিসেবে পাঠানো হয়?
+    উত্তর:
+    Primitive types → pass by value
+    Non-primitive types (object, array, function) → pass by reference
+
