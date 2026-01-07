@@ -1,0 +1,69 @@
+===============================
+33-1 How Does Internet Work, HTTP vs HTTPS, and What is an API
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Internet কীভাবে কাজ করে?
+- IP address কী?
+- IPv4 vs IPv6 পার্থক্য কী?
+- DNS কী এবং কীভাবে কাজ করে?
+- HTTP vs HTTPS পার্থক্য কী?
+- API কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. What is Internet?
+- Internet হলো একটি global network যা কোটি কোটি device কে সংযুক্ত করে।
+- Data ছোট ছোট packet আকারে এক device থেকে অন্য device এ যায়।
+- TCP/IP protocol data কে ভাগ করে, পাঠায় এবং সঠিকভাবে পৌঁছায়।
+
+2. What is IP Address?
+- প্রতিটি device এর unique identity হলো IP address।
+- এটি দিয়ে device কে খুঁজে পাওয়া যায়।
+- Example: 192.168.0.1 (IPv4), 2001:0db8:85a3::8a2e:0370:7334 (IPv6)।
+
+3. IPv4 vs IPv6
+- IPv4 → 32-bit address, প্রায় 4.3 billion unique address।
+- IPv6 → 128-bit address, অনেক বেশি unique address (2^128), future-proof solution।
+
+4. What is DNS?
+- DNS (Domain Name System) → domain name কে IP address এ convert করে।
+- Example: www.google.com → 142.250.190.78।
+
+5. Steps of DNS Resolution
+- User browser এ domain লিখে।
+- Browser local cache check করে।
+- Recursive DNS server query করে।
+- Root server → TLD server → Authoritative server থেকে IP address পায়।
+- Browser সেই IP দিয়ে server এ connect করে।
+
+6. How Internet Works (Simplified Flow)
+- Browser request পাঠায় → DNS domain resolve করে → IP address পাওয়া যায়।
+- TCP/IP data packet তৈরি করে → Router/ISP এর মাধ্যমে server এ যায়।
+- Server response পাঠায় → Browser content দেখায়।
+
+7. What is HTTP?
+- HTTP (HyperText Transfer Protocol) → web communication এর মূল protocol।
+- Client (browser) এবং server এর মধ্যে request-response model এ কাজ করে।
+- Example: GET, POST request।
+
+8. HTTP vs HTTPS
+- HTTP → data plain text এ পাঠায়, নিরাপদ নয়।
+- HTTPS → SSL/TLS encryption ব্যবহার করে, data secure করে।
+- HTTPS এ padlock icon থাকে, sensitive data (password, banking info) এর জন্য অপরিহার্য।
+
+9. What is an API?
+- API (Application Programming Interface) → software systems এর মধ্যে যোগাযোগের মাধ্যম।
+- Example: Weather API → অন্য app কে weather data দেয়।
+- REST, GraphQL, SOAP → জনপ্রিয় API styles।
+- API developer দের জন্য reusable এবং secure communication তৈরি করে।
+
+📌 Summary
+- Internet → global network, TCP/IP দিয়ে data packet পাঠায়।
+- IP address → device এর unique identity।
+- IPv4 vs IPv6 → 32-bit বনাম 128-bit address।
+- DNS → domain কে IP তে convert করে।
+- HTTP vs HTTPS → secure communication এর জন্য HTTPS ব্যবহার হয়।
+- API → software systems এর মধ্যে data exchange এর মাধ্যম।
+
+
