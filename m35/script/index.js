@@ -24,7 +24,12 @@ const loadCategoryVideos = (id) => {
 
     fetch(url)
     .then((res)=>res.json())
-    .then((data)=> displayVideos(data.category))
+    .then((data)=> {
+        const clickButton = document.getElementById(`btn-${id}`)
+        // console.log('click btn')
+        clickButton.classList.add("active")
+        displayVideos(data.category)
+    });
 };
 
 
@@ -42,7 +47,7 @@ function displayCategories(categories){
         //create element 
         const categoryDiv = document.createElement("div");
         categoryDiv.innerHTML = `
-        <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+        <button id="btn-${cat.category_id}" onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
         `
 
         // append element
@@ -84,6 +89,16 @@ const displayVideos=(videos)=>{ // videos => array of object
     // akta btn a duibar click korle ager data theke jasche ager data soranor jonno
     videoContainer.innerHTML = "";
 
+    if(videos.length === 0){
+        videoContainer.innerHTML=`
+        <div class="col-span-full flex flex-col justify-center items-center py-20 text-center">
+            <img class="w-[120px]" src="./assets/Icon.png" alt="">
+            <h2 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h2>
+        </div>
+        `;
+        return;
+    }
+
     // // loop operation array of object
     // for (let video of videos){
     //     // console.log(video)
@@ -111,7 +126,7 @@ const displayVideos=(videos)=>{ // videos => array of object
       src=${video.thumbnail}
       alt="Shoes" />
   </figure>
-  <span class="absolute bottom-[22rem] right-2 text-white bg-black px-2 rounded text-sm">3hrs 33min</span>
+  <span class="absolute bottom-[7rem] right-2 text-white bg-black px-2 rounded text-sm">3hrs 33min</span>
   <div class=" flex gap-3 px-0 py-5">
    <div class="profile">
     <div class="avatar">
