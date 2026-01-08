@@ -17,6 +17,16 @@ function loadVideos(){
     .then((data) => displayVideos(data.videos))
 }
 
+const loadCategoryVideos = (id) => {
+    // console.log(id);
+    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+    console.log(url)
+
+    fetch(url)
+    .then((res)=>res.json())
+    .then((data)=> displayVideos(data.category))
+};
+
 
 
 
@@ -32,7 +42,7 @@ function displayCategories(categories){
         //create element 
         const categoryDiv = document.createElement("div");
         categoryDiv.innerHTML = `
-        <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+        <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
         `
 
         // append element
@@ -70,6 +80,9 @@ const displayVideos=(videos)=>{ // videos => array of object
     //console.log(videos)
     // get the container
     const videoContainer = document.getElementById("video-container");
+
+    // akta btn a duibar click korle ager data theke jasche ager data soranor jonno
+    videoContainer.innerHTML = "";
 
     // // loop operation array of object
     // for (let video of videos){
@@ -125,4 +138,3 @@ const displayVideos=(videos)=>{ // videos => array of object
 }
 
 loadCategories()
-loadVideos()
