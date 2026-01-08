@@ -1,0 +1,226 @@
+Question 01
+
+What does the V8 JavaScript engine do?
+
+
+A
+Executes JavaScript code in the browser and converts it to bytecode
+
+-->B
+Converts JavaScript code to machine code
+
+correct-green-icon
+C
+Handles HTML rendering in the browser
+
+D
+Provides styling rules for the DOM
+
+Your answer is correct!
+
+Question 02
+
+What happens when JavaScript encounters the Call Stack being full?
+
+
+A
+The program runs faster
+
+B
+The stack is cleared automatically
+
+-->C
+A "stack overflow" error occurs
+
+correct-green-icon
+D
+The code pauses execution until the stack is free
+
+Your answer is correct!
+
+Question 03
+
+What is the result of the following JavaScript code?
+
+let message = 'Hello!'; 
+setTimeout(() => {
+ message = 'Goodbye!'; 
+}, 0); 
+console.log(message);
+
+-->A
+Prints 'Hello!'
+
+correct-green-icon
+B
+Prints 'Goodbye!'
+
+C
+Throws an error
+
+D
+Prints 'undefined'
+
+Your answer is correct!
+
+Question 04
+
+What does it mean that JavaScript is single-threaded?
+
+
+-->A
+It can only execute one function at a time
+
+correct-green-icon
+B
+It cannot perform asynchronous operations
+
+C
+It supports multiple threads of execution
+
+D
+It runs on multiple processors simultaneously
+
+Your answer is correct!
+
+Question 05
+
+What is the output of the following JavaScript code using setInterval and x++?
+
+let x = 1;
+let intervalId = setInterval(() => {
+ console.log(x++);
+ if (x > 3) clearInterval(intervalId);
+}, 1000);
+
+-->A
+Prints 1, 2, 3, then stops
+
+B
+Prints 1, 2, 3, 4, then stops
+
+correct-green-icon
+C
+Prints 0, 1, 2, then stops
+
+D
+Throws an error
+
+Your answer is wrong!
+Correct answer: (A)
+
+Question 06
+
+What is the JavaScript Event Loop responsible for?
+
+
+A
+Managing synchronous code execution
+
+B
+Managing asynchronous code execution
+
+-->C
+Handling both synchronous and asynchronous code execution
+
+correct-green-icon
+D
+Providing styling for HTML elements
+
+Your answer is correct!
+
+Question 07
+
+What is the output of the following JavaScript code using try, catch, and finally?
+
+try {
+ console.log("Start");
+ throw new Error("Error occurred");
+} catch (err) {
+ console.log(err.message);
+} finally {
+ console.log("End");
+}
+
+-->A
+Prints "Start", "Error occurred", then "End"
+
+correct-green-icon
+B
+Prints "Error occurred", then "End"
+
+C
+Throws an error
+
+D
+Prints "Start", then throws an error
+
+Your answer is correct!
+
+Question 08
+
+What is the output of the following JavaScript code using async/await?
+
+async function myFunction() {
+ return "Hello";
+}
+myFunction().then(console.log);
+
+A
+Throws an error
+
+B
+Prints undefined
+
+-->C
+Prints "Hello"
+
+correct-green-icon
+D
+Prints a promise object
+
+Your answer is correct!
+
+Question 09
+
+In JavaScript, what is the difference between throw and return inside a try block?
+
+
+A
+throw returns a value, while return raises an exception
+
+-->B
+throw raises an exception, while return exits the function
+
+correct-green-icon
+C
+Both are used to exit a function
+
+D
+There is no difference between throw and return
+
+Your answer is correct!
+
+Question 10
+
+What will the following code output with respect to the JavaScript event loop?
+
+console.log("A");
+Promise.resolve().then(() => console.log("B"));
+setTimeout(() => console.log("C"), 0);
+console.log("D");
+
+A
+Prints "A", "D", "C", "B"
+
+B
+Prints "A", "B", "D", "C"
+
+-->C
+Prints "A", "D", "B", "C"
+
+correct-green-icon
+D
+Prints "A", "B", "C", "D"
+
+Your answer is correct!

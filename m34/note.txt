@@ -281,4 +281,753 @@ Fuchka Ready! (after delay)
 - Event Loop → call stack ফাঁকা হলে callback queue থেকে কাজ নিয়ে আসে।
 
 
+===============================
+34-4 Single-threaded, Asynchronous vs Synchronous
+===============================
 
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- JavaScript কি single-threaded?
+- Synchronous vs Asynchronous execution কীভাবে কাজ করে?
+- console.log এর output order কেন আলাদা হয়?
+- fetch এবং setTimeout কীভাবে কাজ করে?
+- Event Loop এর সাথে এদের সম্পর্ক কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+[1] JavaScript Single-threaded
+- JavaScript single-threaded → একসাথে একটাই কাজ করে।
+- Execution হয় Call Stack দিয়ে।
+
+[2] Synchronous Example
+console.log("hero")
+console.log("first")
+console.log("first")
+console.log("first")
+
+function sum(){
+    console.log("hello")
+}
+
+Output:
+hero
+first
+first
+first
+
+👉 সবকিছু line by line execute হয়। কোনো delay নেই।
+
+[3] Asynchronous Example (Function Calls)
+const first = ()=>{
+    second();
+    console.log("hello i am from first")
+}
+
+const second = ()=>{
+    third();
+    console.log("hello i am from second")
+}
+
+const third = ()=>{
+    console.log("hello i am from third")
+}
+
+first();
+console.log("ami sobar seshe a asbo")
+
+Output:
+hello i am from third
+hello i am from second
+hello i am from first
+ami sobar seshe a asbo
+
+👉 Function chain → third() → second() → first() → শেষে main thread এর log।
+
+[4] Asynchronous Example (Fetch API)
+console.log("ami prothom")
+
+fetch("https://jsonplaceholder.typicode.com/todos/1")
+.then(res=>res.json())
+.then(data=>console.log(data))
+
+console.log("ami second")
+const result = num1 + num2;
+console.log(result)
+
+Output:
+ami prothom
+ami second
+30
+{userId: 1, id: 1, title: "...", completed: false} // fetch result পরে আসে
+
+👉 fetch → asynchronous, তাই result পরে আসে।
+👉 প্রথমে synchronous কাজ শেষ হয়, তারপর asynchronous callback চলে।
+
+[5] Asynchronous Example (setTimeout)
+console.log("ami prothom")
+
+setTimeout(()=>{
+    console.log("ami second function")
+}, 3000)
+
+console.log("ami second")
+const result2 = num4 + num5;
+console.log(result2)
+
+Output:
+ami prothom
+ami second
+30
+ami second function (after 3s delay)
+
+👉 setTimeout → callback queue তে যায়, delay শেষে execute হয়।
+
+📌 Summary
+- JavaScript single-threaded → একসাথে একটাই কাজ করে।
+- Synchronous → line by line, immediate execution।
+- Asynchronous → কাজ delay হয় বা পরে execute হয় (fetch, setTimeout)।
+- Execution Order → synchronous কাজ আগে শেষ হয়, তারপর asynchronous callback queue থেকে কাজ চলে।
+- Event Loop → call stack ফাঁকা হলে asynchronous কাজকে callback queue থেকে call stack এ পাঠায়।
+
+
+
+
+===============================
+34-5 Promise, Promise All
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Promise কী?
+- Promise এর তিনটি state কী কী?
+- Promise কিভাবে কাজ করে?
+- Promise.all এর কাজ কী?
+- Error handle করার উপায় কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Promise Overview
+- Promise হলো একটি object যা asynchronous কাজের eventual completion (বা failure) কে represent করে।
+- Promise এর তিনটি state থাকে:
+  1. Pending → initial state, কাজ এখনো শেষ হয়নি।
+  2. Resolve (Fulfilled) → কাজ সফলভাবে শেষ হয়েছে।
+  3. Reject → কাজ ব্যর্থ হয়েছে।
+
+👉 Promise asynchronous কাজকে handle করার জন্য ব্যবহার হয়।
+
+2. Promise Structure (Example)
+const loadData = () => {
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then(res => console.log(res.json())) // Promise resolve হলে কাজ করবে
+    .catch(err => console.log(err)) // error হলে catch এ যাবে
+}
+
+loadData();
+
+👉 এখানে fetch asynchronous কাজ করছে।
+👉 then() → success হলে কাজ করবে।
+👉 catch() → error হলে কাজ করবে।
+
+3. Promise Example (Custom)
+const fetchData = () => {
+    return new Promise((resolve, reject)=>{
+        if(status){
+            // resolve({name: "hero"})
+            const mockData = {
+                json:()=>Promise.reject({name:"hero"})
+            }
+            resolve
+        }
+        else {
+            reject("server error")
+        }
+    })
+}
+
+fetchData()
+.then(res => console.log(res))
+.catch(err => console.log(err))
+
+👉 এখানে manually Promise বানানো হয়েছে।
+👉 resolve → success হলে data ফেরত দেবে।
+👉 reject → error হলে catch এ যাবে।
+
+4. Promise.all
+- Promise.all একসাথে multiple asynchronous কাজ handle করতে ব্যবহৃত হয়।
+- সবগুলো কাজ শেষ হলে একসাথে result দেয়।
+- যদি কোনো একটি কাজ fail করে → পুরো Promise.all reject হয়।
+
+Example:
+const urls = [
+    'https://jsonplaceholder.typicode.com/todos/1',
+    'https://jsonplaceholder.typicode.com/comments',
+    'https://jsonplaceholder.typicode.com/todos/1',
+    'https://jsonplaceholder.typicode.com/comments',
+]
+
+Promise.all(urls.map(url => {
+    return fetch(url).then(res => res.json()).then(data => data)
+}))
+.then(data => console.log(data))
+.catch(error => console.log(error))
+
+👉 এখানে একসাথে চারটি API call করা হয়েছে।
+👉 সবগুলো কাজ শেষ হলে data একসাথে পাওয়া যাবে।
+👉 কোনো একটি কাজ fail করলে catch এ যাবে।
+
+📌 Summary
+- Promise asynchronous কাজকে handle করে।
+- Promise এর তিনটি state → Pending, Resolve, Reject।
+- then() → success হলে কাজ করে।
+- catch() → error হলে কাজ করে।
+- Promise.all → একসাথে multiple asynchronous কাজ handle করে।
+- সব কাজ শেষ হলে একসাথে result দেয়, কোনো একটি fail করলে reject হয়।
+
+------------------------------------------------------------
+Key Points মনে রাখার জন্য
+------------------------------------------------------------
+- Promise = asynchronous কাজের eventual result।
+- State → Pending, Resolve, Reject।
+- then() এবং catch() দিয়ে কাজ handle হয়।
+- Promise.all → একসাথে multiple কাজ handle করার জন্য।
+- Error handling সবসময় catch() দিয়ে করতে হবে।
+
+
+===============================
+34-5-1 Learn Promise in Animated Way
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Promise কী?
+- Promise এর তিনটি state কী কী?
+- Promise কিভাবে কাজ করে?
+- resolve এবং reject এর কাজ কী?
+- Promise এর সাথে analogy কিভাবে বোঝা যায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Promise State
+- Promise asynchronous কাজকে represent করে।
+- Promise এর তিনটি সম্ভাব্য অবস্থা থাকে:
+  1. Pending → কাজ চলছে, এখনো শেষ হয়নি।
+  2. Resolve (Fulfilled) → কাজ সফলভাবে শেষ হয়েছে।
+  3. Reject → কাজ ব্যর্থ হয়েছে।
+
+👉 Example analogy: একজন কর্মীকে কাজ দেওয়া হলো → কাজ শেষ হলে success বা fail জানাবে।
+
+2. Example Code (Animated Analogy)
+function orderFurniture(furniture) {
+    return new Promise((resolve, reject) => {
+        // The worker starts working
+        setTimeout(() => {
+            if (furniture === 'wardrobe') {
+                // Create the closet
+                resolve('Closet creation completed!');
+            } else if (furniture === 'table') {
+                // Not enough wood
+                reject('Unable to create table. Lack of wood!');
+            } else {
+                reject('Unknown furniture!');
+            }
+        }, 2000); // Work finished after 2 seconds
+    });
+}
+
+orderFurniture('wardrobe')
+.then(successMessage => {
+    console.log(successMessage); // success message
+})
+.catch(errorMessage => {
+    console.error(errorMessage); // error message
+});
+
+👉 এখানে orderFurniture() function একটি Promise return করছে।
+👉 resolve → কাজ সফল হলে message দেবে।
+👉 reject → কাজ ব্যর্থ হলে error message দেবে।
+👉 setTimeout → delay দিয়ে asynchronous কাজ simulate করছে।
+
+3. Output Example
+Case 1: furniture = 'wardrobe'  
+Output → Closet creation completed!
+
+Case 2: furniture = 'table'  
+Output → Unable to create table. Lack of wood!
+
+Case 3: furniture = 'chair'  
+Output → Unknown furniture!
+
+📌 Summary
+- Promise asynchronous কাজকে handle করে।
+- State → Pending, Resolve, Reject।
+- resolve() → success হলে কাজ করে।
+- reject() → error হলে কাজ করে।
+- then() → success message handle করে।
+- catch() → error message handle করে।
+- Analogy → কর্মীকে কাজ দেওয়া হলো, কাজ শেষ হলে success বা fail জানাবে।
+
+------------------------------------------------------------
+Key Points মনে রাখার জন্য
+------------------------------------------------------------
+- Promise = asynchronous কাজের eventual result।
+- State → Pending, Resolve, Reject।
+- then() → success হলে কাজ করে।
+- catch() → error হলে কাজ করে।
+- setTimeout → delay দিয়ে asynchronous কাজ simulate করা যায়।
+
+
+===============================
+34-6 Async/Await in Details
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Async/Await কী?
+- Async function কিভাবে কাজ করে?
+- await এর কাজ কী?
+- try...catch কেন ব্যবহার করা হয়?
+- Async/Await এর সুবিধা কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Async/Await Overview
+- Async/Await হলো Promise এর উপর ভিত্তি করে asynchronous কাজকে সহজভাবে handle করার উপায়।
+- async keyword → function কে asynchronous করে।
+- await keyword → asynchronous কাজ শেষ না হওয়া পর্যন্ত অপেক্ষা করে।
+👉 Analogy: দোকানে অর্ডার দিলে → অর্ডার শেষ না হওয়া পর্যন্ত অপেক্ষা করা।
+
+2. Example Code
+const loadData = async() => {
+    try {
+        console.log("ami prothom")
+        console.log("ami second")
+
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+
+        const data = await response.json();
+        console.log(data)
+
+        const result = 10 + 10;
+        console.log(result)
+        console.log("ami third")
+    }
+    catch {
+        console.log("error")
+    }
+}
+
+loadData();
+
+👉 এখানে loadData() একটি async function।
+👉 fetch → asynchronous কাজ, await দিয়ে অপেক্ষা করা হয়েছে।
+👉 response.json() → asynchronous কাজ, await দিয়ে অপেক্ষা করা হয়েছে।
+👉 try...catch → error handle করার জন্য ব্যবহার করা হয়েছে।
+
+3. Output Sequence
+ami prothom  
+ami second  
+{userId: 1, id: 1, title: "...", completed: false}  
+20  
+ami third  
+
+👉 সবকিছু sequentially execute হয় কারণ await asynchronous কাজকে synchronous এর মতো করে দেয়।
+
+📌 Summary
+- async → function কে asynchronous করে।
+- await → asynchronous কাজ শেষ না হওয়া পর্যন্ত অপেক্ষা করে।
+- try...catch → error handle করার জন্য।
+- Async/Await → Promise এর উপর ভিত্তি করে কাজ করে কিন্তু কোডকে সহজ ও readable করে।
+- Output sequentially আসে → asynchronous কাজও line by line execute হয়।
+
+------------------------------------------------------------
+Key Points মনে রাখার জন্য
+------------------------------------------------------------
+- Async/Await = Promise এর সহজ syntax।
+- async function সবসময় একটি Promise return করে।
+- await → asynchronous কাজ শেষ না হওয়া পর্যন্ত অপেক্ষা করে।
+- Error handling → try...catch দিয়ে করতে হয়।
+- Async/Await কোডকে readable ও clean করে।
+
+
+===============================
+34-6-1 Learn Async/Await in Animated Way
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- JavaScript single-threaded মানে কী?
+- Asynchronous task কীভাবে কাজ করে?
+- async এবং await এর কাজ কী?
+- Promise এর সাথে async/await এর সম্পর্ক কী?
+- Async/Await এর analogy কীভাবে বোঝা যায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. JavaScript Single-threaded
+- JavaScript single-threaded → একসাথে একটাই কাজ করে।
+- Asynchronous task → delay বা external কাজের জন্য অপেক্ষা করে।
+- Async/Await → asynchronous কাজকে synchronous এর মতো করে লেখার উপায়।
+
+2. Async Function Syntax
+async function fetchData() {
+    // write your code here
+}
+
+👉 async keyword → function কে asynchronous করে।
+👉 await keyword → asynchronous কাজ শেষ না হওয়া পর্যন্ত অপেক্ষা করে।
+
+3. Promise State Recap
+- Promise এর তিনটি state থাকে:
+  1. Pending → কাজ চলছে।
+  2. Resolved → কাজ সফলভাবে শেষ হয়েছে।
+  3. Rejected → কাজ ব্যর্থ হয়েছে।
+
+👉 Example:
+const data = await fetchData();
+
+4. Async Function Example (Food Analogy)
+async function orderFood() {
+    // Wait for cooking
+    const food = await cookFood();
+
+    // Serve the food
+    console.log("Food is ready!");
+    console.log(food);
+}
+
+// Async operation
+function cookFood() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("Delicious food!");
+        }, 2000);
+    });
+}
+
+// Call the async function
+orderFood();
+
+👉 এখানে orderFood() একটি async function।
+👉 cookFood() একটি Promise return করছে।
+👉 await → cookFood() শেষ না হওয়া পর্যন্ত অপেক্ষা করছে।
+👉 Output sequentially আসছে।
+
+5. Output Example
+Food is ready!  
+Delicious food!  
+
+👉 প্রথমে cookFood() asynchronous কাজ করছে।
+👉 2 সেকেন্ড delay শেষে resolve হচ্ছে।
+👉 তারপর await কাজ শেষ করে result দেখাচ্ছে।
+
+📌 Summary
+- JavaScript single-threaded → একসাথে একটাই কাজ করে।
+- Async/Await → asynchronous কাজকে সহজভাবে handle করার উপায়।
+- async → function কে asynchronous করে।
+- await → asynchronous কাজ শেষ না হওয়া পর্যন্ত অপেক্ষা করে।
+- Promise → asynchronous কাজের ভিত্তি।
+- Analogy → খাবার রান্না শেষ না হওয়া পর্যন্ত অপেক্ষা করা, তারপর পরিবেশন করা।
+
+------------------------------------------------------------
+Key Points মনে রাখার জন্য
+------------------------------------------------------------
+- Async/Await = Promise এর সহজ syntax।
+- async function সবসময় একটি Promise return করে।
+- await → asynchronous কাজ শেষ না হওয়া পর্যন্ত অপেক্ষা করে।
+- Error handling → try...catch দিয়ে করতে হয়।
+- Async/Await কোডকে readable ও clean করে।
+
+
+===============================
+34-7 setInterval and clearInterval
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- setTimeout() এবং setInterval() এর মধ্যে পার্থক্য কী?
+- setInterval() কীভাবে কাজ করে?
+- clearInterval() এর কাজ কী?
+- কিভাবে loop বন্ধ করা যায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. setTimeout() vs setInterval()
+- setTimeout() → নির্দিষ্ট সময় পরে একবার কাজ করে।
+- setInterval() → নির্দিষ্ট সময় পর পর বারবার কাজ করে।
+👉 Example analogy:
+   - setTimeout → একবার অ্যালার্ম বাজবে।
+   - setInterval → প্রতি নির্দিষ্ট সময় পর পর অ্যালার্ম বাজবে।
+
+2. Example Code (setTimeout)
+let count = 0;
+
+setTimeout(() => {
+    console.log("hello")
+}, 4000);
+
+👉 এখানে 4 সেকেন্ড পরে একবার "hello" print হবে।
+
+3. Example Code (setInterval with clearInterval)
+const clockID = setInterval(() => {
+    count++;
+    // count = count + 1;
+    console.log(count);
+
+    if(count >= 5){
+        clearInterval(clockID);
+    }
+}, 3000);
+
+👉 এখানে প্রতি 3 সেকেন্ড পর count বাড়ছে।
+👉 যখন count ≥ 5 হবে তখন clearInterval() দিয়ে loop বন্ধ হবে।
+
+4. Output Example
+(After 4 seconds)  
+hello  
+
+(Then every 3 seconds)  
+1  
+2  
+3  
+4  
+5  
+
+👉 প্রতি 3 সেকেন্ডে একটি সংখ্যা print হবে।
+👉 5 এ পৌঁছালে loop বন্ধ হয়ে যাবে।
+
+📌 Summary
+- setTimeout() → নির্দিষ্ট সময় পরে একবার কাজ করে।
+- setInterval() → নির্দিষ্ট সময় পর পর বারবার কাজ করে।
+- clearInterval() → setInterval() বন্ধ করার জন্য ব্যবহার হয়।
+- Example → প্রতি 3 সেকেন্ডে সংখ্যা বাড়ছে, 5 এ পৌঁছালে বন্ধ হচ্ছে।
+
+------------------------------------------------------------
+Key Points মনে রাখার জন্য
+------------------------------------------------------------
+- setTimeout = একবার কাজ।
+- setInterval = বারবার কাজ।
+- clearInterval = setInterval বন্ধ করার উপায়।
+- Loop control করতে condition ব্যবহার করতে হয়।
+
+
+===============================
+34-8 JavaScript Event Loop and Concurrency
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Event Loop কীভাবে কাজ করে?
+- Concurrency মানে কী?
+- Call Stack এবং Callback Queue এর ভূমিকা কী?
+- setTimeout asynchronous ভাবে কীভাবে কাজ করে?
+- Execution order কেন আলাদা হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Event Loop Overview
+- JavaScript single-threaded → একসাথে একটাই কাজ করে।
+- Concurrency → একাধিক asynchronous কাজকে manage করার ক্ষমতা।
+- Event Loop → Call Stack এবং Callback Queue এর মধ্যে কাজ করে।
+👉 Call Stack ফাঁকা হলে Event Loop callback queue থেকে কাজ নিয়ে আসে।
+
+2. Example Code (Function Chain)
+function a(){
+    b()
+    console.log("a")
+}
+
+function b(){
+    c()
+    console.log("b")
+}
+
+function c(){
+    d()
+    console.log("c")
+}
+
+function d(){
+    e()
+    console.log("d")
+}
+
+function e(){
+    console.log("e")
+}
+
+👉 এখানে nested function call হচ্ছে।
+👉 Execution order → e → d → c → b → a।
+
+3. Example Code (Event Loop with setTimeout)
+console.log("hello")
+
+setTimeout(() => {
+    console.log("ami setTimeout")
+}, 3000)
+
+setTimeout(() => {
+    console.log("ami setTimeout2")
+}, 3000)
+
+👉 console.log("hello") → synchronous, তাই আগে execute হবে।
+👉 setTimeout → asynchronous, তাই callback queue তে যাবে।
+👉 3 সেকেন্ড পরে Event Loop callback queue থেকে কাজ নিয়ে আসবে।
+
+4. Output Example
+hello  
+e  
+d  
+c  
+b  
+a  
+(After 3 seconds)  
+ami setTimeout  
+ami setTimeout2  
+
+👉 প্রথমে synchronous কাজ শেষ হবে।
+👉 তারপর asynchronous কাজগুলো delay শেষে execute হবে।
+
+📌 Summary
+- JavaScript single-threaded → একসাথে একটাই কাজ করে।
+- Event Loop → Call Stack এবং Callback Queue এর মধ্যে কাজ করে।
+- Synchronous কাজ আগে execute হয়।
+- Asynchronous কাজ callback queue তে যায় এবং পরে execute হয়।
+- setTimeout → delay শেষে কাজ করে।
+
+------------------------------------------------------------
+Key Points মনে রাখার জন্য
+------------------------------------------------------------
+- Event Loop = manager → Call Stack ফাঁকা হলে callback queue থেকে কাজ আনে।
+- Concurrency = একাধিক asynchronous কাজকে manage করা।
+- setTimeout → asynchronous কাজ, delay শেষে execute হয়।
+- Execution order → synchronous আগে, asynchronous পরে।
+
+
+===============================
+34-9 Module Summary and Interview Questions
+===============================
+
+🎯 Interview Questions (with Answers)
+--------------------------------------
+
+Q1: Tell me something about JS engine V8 internal mechanism.  
+Ans: V8 হলো Google এর JavaScript engine যা Chrome এবং Node.js এ ব্যবহৃত হয়। এটি JavaScript কোডকে machine code এ compile করে দ্রুত execute করে। V8 এ Just-In-Time (JIT) compiler ব্যবহার হয় যা কোডকে optimize করে।
+
+Q2: What is event loop in JavaScript?  
+Ans: Event Loop হলো JavaScript এর concurrency model এর মূল অংশ। এটি Call Stack এবং Callback Queue এর মধ্যে কাজ করে। Call Stack ফাঁকা হলে Event Loop callback queue থেকে কাজ নিয়ে আসে।
+
+Q3: If JavaScript is single-threaded, how does it handle asynchronous call?  
+Ans: JavaScript asynchronous কাজগুলোকে Web APIs বা background thread এ পাঠায়। কাজ শেষ হলে callback queue তে যায়। Event Loop call stack ফাঁকা হলে callback queue থেকে কাজ নিয়ে আসে।
+
+Q4: Differences between setTimeout and setInterval.  
+Ans:  
+- setTimeout → নির্দিষ্ট সময় পরে একবার কাজ করে।  
+- setInterval → নির্দিষ্ট সময় পর পর বারবার কাজ করে।  
+- clearTimeout এবং clearInterval দিয়ে কাজ বন্ধ করা যায়।
+
+Q5: Can you explain the difference between an async function and a regular function in JavaScript?  
+Ans:  
+- Regular function → synchronous কাজ করে।  
+- Async function → সবসময় একটি Promise return করে।  
+- await keyword ব্যবহার করে asynchronous কাজকে synchronous এর মতো handle করা যায়।
+
+Q6: What's the error handling strategy for promises that were rejected while awaiting?  
+Ans: try...catch block ব্যবহার করে error handle করা হয়।  
+Example:  
+```js
+try {
+   const data = await fetchData();
+} catch(error) {
+   console.error(error);
+}
+
+
+
+Q7: What are the states of a promise?
+Ans:
+- Pending → কাজ চলছে।
+- Fulfilled (Resolved) → কাজ সফলভাবে শেষ হয়েছে।
+- Rejected → কাজ ব্যর্থ হয়েছে।
+
+Q8: Can you explain what the then method does?
+Ans:
+- then() method Promise resolve হলে কাজ করে।
+- এটি resolved value কে handle করে।
+
+Example:
+fetchData().then(res => console.log(res));
+
+------------------------------------------------------------
+🎯 Practice Task - 1
+------------------------------------------------------------
+
+a) Write a function that displays a message after 5s.
+
+function showMessage() {
+    setTimeout(() => {
+        console.log("Message after 5 seconds!");
+    }, 5000);
+}
+showMessage();
+
+b) Write a function called delayedGreeting that takes two parameters, name and delay time, and logs a greeting message after the given delay time.
+
+function delayedGreeting(name, delay) {
+    setTimeout(() => {
+        console.log(`Hello, ${name}!`);
+    }, delay);
+}
+
+delayedGreeting('Alice', 2000);
+
+Output:
+Hello, Alice!
+
+------------------------------------------------------------
+🎯 Practice Task - 2
+------------------------------------------------------------
+
+The function tellJoke logs a funny message every 2 seconds and after 10 seconds it stops.
+
+function tellJoke() {
+    console.log("Why don't scientists trust atoms? Because they make up everything!");
+}
+
+const jokeInterval = setInterval(tellJoke, 2000);
+
+// After 10 seconds, stop telling jokes
+setTimeout(() => {
+    clearInterval(jokeInterval);
+    console.log("Joke telling stopped!");
+}, 10000);
+
+Output Example:
+(Every 2 seconds) → "Why don't scientists trust atoms? Because they make up everything!"
+(After 10 seconds) → "Joke telling stopped!"
+
+------------------------------------------------------------
+🎯 Practice Task - 3
+------------------------------------------------------------
+
+Write an async/await function that fetches data from an API and logs a message.
+
+async function getJoke() {
+    try {
+        const response = await fetch("https://v2.jokeapi.dev/joke/Programming?type=single");
+        const data = await response.json();
+        console.log(data.joke);
+    } catch(error) {
+        console.error("Error fetching joke:", error);
+    }
+}
+
+getJoke();
+
+Output Example:
+Two SQL tables sit at the bar. A query approaches and asks "Can I join you?"
+(Note: Output may change according to the API response)
+
+------------------------------------------------------------
+📌 Summary
+------------------------------------------------------------
+- V8 engine → JavaScript কে machine code এ compile করে।
+- Event Loop → Call Stack এবং Callback Queue manage করে।
+- Asynchronous কাজ → Web APIs + Event Loop দিয়ে handle হয়।
+- setTimeout vs setInterval → একবার বনাম বারবার কাজ।
+- Async/Await → Promise এর সহজ syntax।
+- Promise এর state → Pending, Fulfilled, Rejected।
+- then() → resolved value handle করে।
+- Error handling → try...catch দিয়ে।
