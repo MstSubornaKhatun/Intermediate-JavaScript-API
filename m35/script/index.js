@@ -29,6 +29,40 @@ function loadVideos(){
     })
 }
 
+// use for show details btn
+const loadVideoDetails = (videoId)=>{
+    console.log(videoId)
+    const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayVideoDetails(data.video))
+}
+
+/*
+{category_id: '1001', video_id: 'aaal', thumbnail: 'https://i.ibb.co/hdtZYbB/enchnting.jpg', title: 'Enchanted Harmonies', authors: Array(1), …}
+*/
+const displayVideoDetails = (video) => {
+console.log(video);
+document.getElementById("video_details").showModal();
+const detailsContainer = document.getElementById("details-container");
+
+detailsContainer.innerHTML = `
+<div class="card bg-base-100 image-full  shadow-sm">
+  <figure>
+    <img
+      src=${video.thumbnail}
+      alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${video.title}</h2>
+    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+   
+  </div>
+</div>
+`;
+
+}
+
 const loadCategoryVideos = (id) => {
     // console.log(id);
     const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
@@ -139,7 +173,7 @@ const displayVideos=(videos)=>{ // videos => array of object
       src=${video.thumbnail}
       alt="Shoes" />
   </figure>
-  <span class="absolute bottom-[7rem] right-2 text-white bg-black px-2 rounded text-sm">3hrs 33min</span>
+  <span class="absolute bottom-[7rem] right-2 text-white bg-black px-2 rounded text-sm">3hrs 33min ago</span>
   <div class=" flex gap-3 px-0 py-5">
    <div class="profile">
     <div class="avatar">
@@ -154,8 +188,11 @@ const displayVideos=(videos)=>{ // videos => array of object
    <p class="text-sm text-gray-400">${video.others.views}</p>
    </div>
   </div>
+  
+  <button onclick=loadVideoDetails('${video.video_id}') class="btn btn-block">Show Details</button>
 </div>
         `;
+        // // ai id ta string tai quatation ('') er modhe likhbo 
         // append
         videoContainer.append(videoCard)
 
