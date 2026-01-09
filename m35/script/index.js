@@ -18,8 +18,8 @@ function loadCategories(){
     .then((data) =>displayCategories(data.categories))
 }
 
-function loadVideos(){
-    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+function loadVideos(searchText = ""){
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
     .then(response => response.json())
     .then((data) => {
         removeActiveClass();
@@ -184,7 +184,10 @@ const displayVideos=(videos)=>{ // videos => array of object
    </div>
    <div class="intro">
     <h2 class="text-sm ">Shape of You</h2>
-    <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name} <img class="w-5 h-5" src="assets/verify.png" alt=""> </p>
+    <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name} 
+
+    ${video.authors[0].verified === true  ? `<img class="w-5 h-5" src="assets/verify.png" alt="">` : ``}
+    </p>
    <p class="text-sm text-gray-400">${video.others.views}</p>
    </div>
   </div>
@@ -197,9 +200,16 @@ const displayVideos=(videos)=>{ // videos => array of object
         videoContainer.append(videoCard)
 
     });
-
-
-
 }
+
+
+// search 
+document.getElementById('search-input').addEventListener("keyup", (e) =>{
+    const input = e.target.value;
+    // console.log(input)
+    loadVideos(input)
+
+});
+
 
 loadCategories()
