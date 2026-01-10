@@ -1,0 +1,23 @@
+netlify a deploy korar jonno ---
+
+project er file ta netlify website a upload 
+korte hobe. tahole deploy link dibe and lunk/url
+ta caile change ba modify o korte parbe.
+
+
+
+
+
+surge a deploy korar jonno ---
+
+npm install --global surge
+surge
+email
+password
+CNAME --> er mothe jei url(test-assignment-10.surge.sh)
+set kore diba oitai thakbe
+
+
+
+
+

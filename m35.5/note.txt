@@ -1,0 +1,48 @@
+===============================
+34-5 Deploy Project: Netlify vs Surge
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Netlify এ deploy করার ধাপ কী?
+- Surge এ deploy করার ধাপ কী?
+- Netlify vs Surge এর পার্থক্য কী?
+- URL / Link modify করা যায় কীভাবে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Netlify Deployment
+- Step 1: Netlify website এ যান → https://www.netlify.com
+- Step 2: Project এর file (HTML, CSS, JS) upload করুন।
+- Step 3: Netlify automatically deploy করবে।
+- Step 4: Deploy link (URL) পাওয়া যাবে।
+- Step 5: চাইলে link modify/change করা যাবে (custom domain বা Netlify settings থেকে)।
+
+👉 Example:
+Upload → Deploy → Get Link → Modify Link
+
+2. Surge Deployment
+- Step 1: Install Surge globally  
+  npm install --global surge
+
+- Step 2: Terminal এ project folder এ যান।
+- Step 3: Run command →  
+  surge
+
+- Step 4: Email এবং Password দিয়ে login করুন।
+- Step 5: CNAME file এ custom URL সেট করুন।  
+  Example: test-assignment-10.surge.sh
+
+- Step 6: Deploy complete হলে সেই URL এ project দেখা যাবে।
+
+👉 Example:
+surge → login → set URL → deploy → live project
+
+3. Key Points
+- Netlify → সহজে drag & drop করে deploy করা যায়।
+- Surge → terminal command দিয়ে deploy করা যায়।
+- Netlify link modify করা যায় settings থেকে।
+- Surge link fix থাকে (CNAME file এ যেটা set করা হয়)।
+
+📌 Summary
+- Netlify → project file upload → automatic deploy → link পাওয়া যায় → link modify করা যায়।
+- Surge → npm install surge → surge command → email/password login → CNAME এ URL set → deploy complete।

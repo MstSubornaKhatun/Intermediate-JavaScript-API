@@ -1,0 +1,457 @@
+===============================
+Milestone 6 Takeaway
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- API থেকে ডাটা লোড করার নিয়ম কী?
+- Arrow function কিভাবে কাজ করে?
+- Template string এ ডাইনামিক ডাটা যোগ করার নিয়ম কী?
+- map, forEach, filter, find এর পার্থক্য কী?
+- let, const, var এর মধ্যে ডিফারেন্স কী?
+- Array vs Object লুপ করার নিয়ম কী?
+- Spread operator কিভাবে কাজ করে?
+- ES6 এ destructuring কিভাবে করা হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Fetch / Async Await দিয়ে API থেকে Data Load
+- fetch() বা async/await ব্যবহার করে API থেকে data আনা যায়।
+- Data কখন array, কখন object আকারে থাকে → সেটা বুঝে UI তে দেখাতে হয়।
+- Example:
+  const loadData = async () => {
+      const res = await fetch("https://jsonplaceholder.typicode.com/users");
+      const data = await res.json();
+      console.log(data);
+  };
+
+2. Arrow Function
+- Short syntax এ function declare করার জন্য ব্যবহার হয়।
+- Example:
+  const sum = (a, b) => a + b;
+
+3. Template String
+- Backtick (`) ব্যবহার করে dynamic data যোগ করা যায়।
+- Example:
+  const name = "Rahim";
+  console.log(`Hello, my name is ${name}`);
+
+4. Array Methods: map, forEach, filter, find
+- map → নতুন array তৈরি করে।
+- forEach → প্রতিটি element এর উপর কাজ করে কিন্তু নতুন array return করে না।
+- filter → শর্ত অনুযায়ী নতুন array তৈরি করে।
+- find → শর্ত অনুযায়ী প্রথম matching element return করে।
+
+5. let, const, var Differences
+- var → function scoped, re-declare করা যায়।
+- let → block scoped, re-assign করা যায়।
+- const → block scoped, re-assign করা যায় না।
+
+6. Looping
+- Array → for, for...of, map, forEach ব্যবহার করা যায়।
+- Object → for...in বা Object.keys(), Object.values(), Object.entries() ব্যবহার করা যায়।
+
+7. Spread Operator
+- Array বা object copy করার জন্য ব্যবহার হয়।
+- Example:
+  const arr = [1, 2, 3];
+  const copy = [...arr];
+
+8. ES6 Destructuring
+- Array বা object থেকে value আলাদা করে variable declare করা যায়।
+- Example:
+  const person = {name: "Rahim", age: 25};
+  const {name, age} = person;
+
+  const numbers = [10, 20, 30];
+  const [x, y] = numbers;
+
+📌 Summary
+- fetch/async await → API থেকে data লোড।
+- Arrow function → short syntax function।
+- Template string → dynamic data যোগ।
+- map/forEach/filter/find → array methods এর পার্থক্য।
+- let/const/var → scope এবং re-assign rules।
+- Array vs Object → আলাদা looping techniques।
+- Spread operator → copy বা merge করার জন্য।
+- Destructuring → object/array থেকে variable declare করার জন্য।
+
+
+===============================
+36_5-1 Set and Read Simple Values from Local Storage
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Local Storage এ কিভাবে data set করতে হয়?
+- Local Storage থেকে data কিভাবে পড়তে হয়?
+- Data remove করার নিয়ম কী?
+- Local Storage এ key-value pair কিভাবে কাজ করে?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Local Storage Overview
+- Local Storage হলো browser এর একটি storage system।
+- এখানে data key-value pair আকারে save হয়।
+- Data browser বন্ধ হলেও থেকে যায় (persistent storage)।
+
+2. Set Item (Data Save করা)
+- localStorage.setItem("key", "value")
+- Example:
+  const age = 10;
+  localStorage.setItem("myage", age);
+
+👉 এখানে "myage" হলো key এবং 10 হলো value।
+
+3. Get Item (Data পড়া)
+- localStorage.getItem("key")
+- Example:
+  console.log(localStorage.getItem("myage")); // 10
+
+👉 getItem দিয়ে key এর value পাওয়া যায়।
+
+4. Remove Item (Data মুছে ফেলা)
+- localStorage.removeItem("key")
+- Example:
+  localStorage.removeItem("age");
+
+👉 removeItem দিয়ে নির্দিষ্ট key এর data delete হয়।
+
+5. Example Code
+/*
+localStorage.setItem("age", 10);
+localStorage.getItem("age"); // '10'
+
+localStorage.setItem("status", "okay boss");
+localStorage.getItem("status"); // 'okay boss'
+
+localStorage.removeItem("age"); // undefined
+*/
+
+const age = 10;
+localStorage.setItem("myage", age);
+console.log(localStorage.getItem("myage")); // 10
+
+📌 Summary
+- setItem → Local Storage এ data save করে।
+- getItem → Local Storage থেকে data পড়ে।
+- removeItem → Local Storage থেকে data delete করে।
+- Local Storage → key-value pair এ কাজ করে এবং browser এ persistent থাকে।
+
+
+===============================
+36_5-2 How to Set and Get Objects in Local Storage
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Local Storage এ object কিভাবে save করা যায়?
+- Object কে string এ convert করার নিয়ম কী?
+- JSON.stringify এবং JSON.parse এর কাজ কী?
+- Local Storage থেকে object আবার কিভাবে পাওয়া যায়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. Problem with Direct Object Storage
+- localStorage শুধুমাত্র string আকারে data store করতে পারে।
+- Object সরাসরি set করলে → [object Object] হিসেবে save হয়।
+- Example:
+  localStorage.setItem("suborna", person); // [object Object]
+
+👉 তাই object কে আগে string এ convert করতে হবে।
+
+2. Convert Object to String
+- JSON.stringify(object) → object কে string এ convert করে।
+- Example:
+  const person = {name: "Hena", age: 10, friends: ["Faha", "Naha"]};
+  const convertedToString = JSON.stringify(person);
+  console.log(convertedToString);
+  // {"name":"Hena","age":10,"friends":["Faha","Naha"]}
+
+👉 typeof convertedToString → "string"
+
+3. Save Object in Local Storage
+- localStorage.setItem("key", JSON.stringify(object));
+- Example:
+  localStorage.setItem("hello", convertedToString);
+
+👉 এখন object string আকারে localStorage এ save হলো।
+
+4. Get Object from Local Storage
+- localStorage.getItem("key") → string return করে।
+- JSON.parse(string) → string কে আবার object এ convert করে।
+- Example:
+  const data = localStorage.getItem("hello");
+  const converted = JSON.parse(data);
+  console.log(converted); 
+  // {name: "Hena", age: 10, friends: Array(2)}
+
+👉 এখন object আবার পাওয়া যাবে।
+
+5. Example Code (Full Flow)
+const handleAddToStorage = () => {
+    console.log("hello"); // button click করলে console এ দেখাবে
+
+    const person = {
+        name: "Hena",
+        age: 10,
+        friends: ["Faha", "Naha"]
+    };
+
+    // Convert object to string
+    const convertedToString = JSON.stringify(person);
+    localStorage.setItem("hello", convertedToString);
+
+    // Convert back to object
+    const backToString = JSON.parse(convertedToString);
+    console.log(backToString.name); // Hena
+};
+
+const data = localStorage.getItem("hello");
+const converted = JSON.parse(data);
+console.log(converted); 
+// {name: "Hena", age: 10, friends: Array(2)}
+
+📌 Summary
+- localStorage শুধুমাত্র string store করতে পারে।
+- Object save করতে হলে → JSON.stringify() দিয়ে string এ convert করতে হয়।
+- Object পড়তে হলে → localStorage.getItem() দিয়ে data নিয়ে JSON.parse() দিয়ে আবার object এ convert করতে হয়।
+- JSON.stringify  → object → string
+- JSON.parse  → string → object
+
+
+===============================
+36_5-3 A Simple Shopping Cart to Add Product and Quantity
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Shopping cart এ product এবং quantity কিভাবে add করা যায়?
+- Local Storage এ cart data কিভাবে save করতে হয়?
+- Display list এ product দেখানোর নিয়ম কী?
+- Input field clear করার নিয়ম কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. handleAddToCart Function
+- Input field থেকে product name এবং quantity নেয়।
+- Console এ দেখায় → console.log(name, quantity)
+- Local Storage এ data save করে → handleSetToLocalStorage(name, quantity)
+- Display list এ product দেখায় → displayProduct(name, quantity)
+- শেষে input field clear করে → productName.value = ""; productQuantity.value = "";
+
+👉 Example:
+const handleAddToCart = () => {
+    const productName = document.getElementById('productName');
+    const productQuantity = document.getElementById("productQuantity");
+    const name = productName.value;
+    const quantity = productQuantity.value;
+
+    console.log(name, quantity);
+
+    handleSetToLocalStorage(name, quantity);
+    displayProduct(name, quantity);
+
+    productName.value = "";
+    productQuantity.value = "";
+};
+
+2. displayProduct Function
+- product-container element এ নতুন li তৈরি করে।
+- li এর innerText এ product name এবং quantity দেখায়।
+- শেষে product-container এ append করে।
+
+👉 Example:
+const displayProduct = (productName, quantity) => {
+    const productContainer = document.getElementById("product-container");
+    const li = document.createElement("li");
+    li.innerText = `${productName} : ${quantity}`;
+    productContainer.appendChild(li);
+};
+
+3. handleSetToLocalStorage Function
+- Console এ product name এবং quantity দেখায়।
+- Object তৈরি করে → const newProduct = {name: quantity};
+- Local Storage এ set করে → localStorage.setItem("cart", JSON.stringify(newProduct))
+
+👉 Example:
+const handleSetToLocalStorage = (productName, quantity) => {
+    console.log(productName, quantity);
+    const newProduct = {name: quantity};
+    localStorage.setItem("cart", JSON.stringify(newProduct));
+};
+
+⚠️ Correction:
+- এখানে newProduct object এ key হিসেবে "name" ব্যবহার করা হয়েছে কিন্তু value হিসেবে quantity রাখা হয়েছে।
+- সঠিকভাবে productName এবং quantity দুটোই রাখতে হবে।
+👉 Corrected Example:
+const newProduct = {productName: productName, quantity: quantity};
+
+📌 Summary
+- handleAddToCart → input field থেকে data নেয়, Local Storage এ save করে, display list এ দেখায়, input clear করে।
+- displayProduct → product-container এ নতুন li তৈরি করে এবং product name + quantity দেখায়।
+- handleSetToLocalStorage → object কে JSON.stringify করে Local Storage এ save করে।
+- Correction → object এ productName এবং quantity দুটোই রাখা উচিত।
+
+
+===============================
+36_5-4 (Advanced) Local Storage Interactions for a Shopping Cart & Practice Task
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- Shopping cart এ product এবং quantity কিভাবে add করা যায়?
+- Local Storage এ multiple product কিভাবে save করতে হয়?
+- Local Storage থেকে data কিভাবে পড়তে হয় এবং display করতে হয়?
+- Object update করার নিয়ম কী?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. handleAddToCart Function
+- Input field থেকে product name এবং quantity নেয়।
+- Console এ দেখায় → console.log(name, quantity)
+- saveProductToLocalStorage(name, quantity) → Local Storage এ data save করে।
+- displayProduct(name, quantity) → product list এ দেখায়।
+- শেষে input field clear করে।
+
+👉 Example:
+const handleAddToCart = () => {
+    const productName = document.getElementById('productName');
+    const productQuantity = document.getElementById("productQuantity");
+    const name = productName.value;
+    const quantity = productQuantity.value;
+
+    console.log(name, quantity);
+
+    saveProductToLocalStorage(name, quantity);
+    displayProduct(name, quantity);
+
+    productName.value = "";
+    productQuantity.value = "";
+};
+
+2. displayProduct Function
+- product-container element এ নতুন li তৈরি করে।
+- li এর innerText এ product name এবং quantity দেখায়।
+- শেষে product-container এ append করে।
+
+👉 Example:
+const displayProduct = (productName, quantity) => {
+    const productContainer = document.getElementById("product-container");
+    const li = document.createElement("li");
+    li.innerText = `${productName} : ${quantity}`;
+    productContainer.appendChild(li);
+};
+
+3. displayProductFromLocalStorage Function
+- Local Storage থেকে সব product পড়ে।
+- Loop করে প্রতিটি product এবং তার quantity console এ দেখায়।
+- displayProduct() দিয়ে UI তে দেখায়।
+
+👉 Example:
+const displayProductFromLocalStorage = () => {
+    const products = getProductFromLocalStorage();
+    for(const product in products) {
+        console.log(product);
+        console.log(products[product]);
+        displayProduct(product, products[product]);
+    }
+};
+
+4. getProductFromLocalStorage Function
+- Local Storage থেকে cart data নেয়।
+- যদি data থাকে → JSON.parse() করে object এ convert করে।
+- না থাকলে → empty object return করে।
+
+👉 Example:
+const getProductFromLocalStorage = () => {
+    let cart = {};
+    const getProduct = localStorage.getItem("cart");
+
+    if(getProduct){
+        cart = JSON.parse(getProduct);
+    }
+    return cart;
+};
+
+5. saveProductToLocalStorage Function
+- Local Storage থেকে আগের cart data নেয়।
+- নতুন productName কে quantity সহ cart object এ যোগ করে।
+- JSON.stringify() দিয়ে string এ convert করে।
+- localStorage.setItem("cart", cartString) দিয়ে Local Storage এ save করে।
+
+⚠️ Correction:
+- কোডে ভুল আছে → localStorage.getItem("cart", cartString) লেখা হয়েছে।
+- সঠিক হবে → localStorage.setItem("cart", cartString)
+
+👉 Corrected Example:
+const saveProductToLocalStorage = (productName, quantity) => {
+    const cart = getProductFromLocalStorage();
+    cart[productName] = quantity;
+    const cartString = JSON.stringify(cart);
+    localStorage.setItem("cart", cartString);
+};
+
+6. Object Update Example
+- Object এ নতুন property যোগ করা যায়।
+- Example:
+const product = { laptop: 102 };
+product["test"] = 100;
+console.log(product); // {laptop: 102, test: 100}
+
+📌 Summary
+- handleAddToCart → input field থেকে data নেয়, Local Storage এ save করে, display list এ দেখায়।
+- displayProduct → product-container এ নতুন li তৈরি করে এবং product name + quantity দেখায়।
+- displayProductFromLocalStorage → Local Storage থেকে সব product পড়ে এবং UI তে দেখায়।
+- getProductFromLocalStorage → Local Storage থেকে cart data নিয়ে object এ convert করে।
+- saveProductToLocalStorage → নতুন product যোগ করে এবং Local Storage এ save করে।
+- Correction → localStorage.setItem() ব্যবহার করতে হবে, getItem() নয়।
+- Object এ নতুন property যোগ করা যায় → product["key"] = value।
+
+
+===============================
+36_5-5 React JS Installation
+===============================
+
+🎯 Cue (কী-ওয়ার্ড / প্রশ্ন)
+- React JS install করার ধাপ কী?
+- npm এর version কিভাবে check করতে হয়?
+- Vite কী এবং কেন ব্যবহার করা হয়?
+- Vite দিয়ে React project কিভাবে create করতে হয়?
+
+📝 Notes (বিস্তারিত তথ্য)
+
+1. npm --version
+- npm হলো Node Package Manager → Node.js এর সাথে আসে।
+- npm --version কমান্ড দিয়ে npm এর বর্তমান version check করা যায়।
+- Example:
+  npm --version
+👉 Output: npm এর version number দেখাবে (যেমন 10.5.0)
+
+2. Vite
+- Vite হলো একটি fast build tool → React, Vue, Svelte ইত্যাদি framework এর জন্য ব্যবহার হয়।
+- এটি development server এবং build system হিসেবে কাজ করে।
+- Vite ব্যবহার করলে project দ্রুত run হয় এবং modern setup পাওয়া যায়।
+
+3. Create React Project with Vite
+- Command: 
+  npm create vite@latest
+👉 Explanation:
+- এই কমান্ড দিয়ে নতুন project তৈরি হয়।
+- @latest → Vite এর সর্বশেষ version ব্যবহার করবে।
+- কমান্ড run করলে project name, framework (React), এবং variant (JavaScript/TypeScript) select করতে হবে।
+
+4. Example Flow
+- Step 1: npm --version → npm এর version check করা।
+- Step 2: npm create vite@latest → নতুন project তৈরি করা।
+- Step 3: Project setup complete হলে → cd project-name দিয়ে project folder এ যেতে হবে।
+- Step 4: npm install → dependency install করতে হবে।
+- Step 5: npm run dev → development server চালু হবে।
+
+👉 Example Commands:
+npm --version
+npm create vite@latest
+cd my-react-app
+npm install
+npm run dev
+
+📌 Summary
+- npm --version → npm এর version check করা হয়।
+- Vite → fast build tool, React project setup এর জন্য ব্যবহার হয়।
+- npm create vite@latest → নতুন React project তৈরি করে।
+- Project setup এর পর dependency install করতে হয় এবং npm run dev দিয়ে server চালু করতে হয়।
